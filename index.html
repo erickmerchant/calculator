@@ -2,23 +2,133 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
+    <style>
+      @font-face {
+        font-display: swap;
+        font-family: 'PT Mono';
+        font-style: normal;
+        font-weight: 400;
+        src:
+          local('PT Mono'),
+          local('PTMono-Regular'),
+          url('/fonts/pt-mono-v7-latin-regular.woff2') format('woff2'),
+          url('/fonts/pt-mono-v7-latin-regular.woff') format('woff');
+      }
+
+      * {
+        box-sizing: border-box;
+        font: inherit;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-size: 20px;
+      }
+
+      .calculator {
+        width: 40em;
+        display: grid;
+        grid-template-rows: repeat(5, 3em);
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.25em;
+        font-family: 'PT Mono', monospace;
+
+        --border: 1px solid hsl(50, 15%, 60%);
+      }
+
+      .calculator output {
+        display: flex;
+        grid-column: 1 / 6;
+        border: var(--border);
+        justify-content: flex-end;
+        align-items: center;
+        padding: 1em;
+        line-height: 1;
+      }
+
+      .calculator button {
+        background: hsl(50, 15%, 80%);
+        border: var(--border);
+      }
+    </style>
   </head>
   <body>
+    <div></div>
     <script type="module" crossorigin="anonymous">
     import framework, {domUpdate, view} from '@erickmerchant/framework'
 
-    const target = document.querySelector('body')
+    const target = document.querySelector('div')
 
     const update = domUpdate(target)
 
     const {app} = view()
 
+    const state = {
+      results: [],
+      current: []
+    }
+
+    const digit = (digit) => () => {
+
+    }
+
+    const operator = (operator) => () => {
+
+    }
+
+    const point = () => () => {
+
+    }
+
+    const negate = () => () => {
+
+    }
+
+    const clear = () => () => {
+
+    }
+
+    const enter = () => () => {
+
+    }
+
     framework({
-      state: null,
+      state,
       update,
-      component({state, commit, next}) {
-        return app`<body>
-          </body>`
+      component({state, commit}) {
+        return app`<div class="calculator">
+          <output>afss asdfa  FAAASD  </output>
+          <button onclick=${() => commit(digit(9))}>9</button>
+          <button onclick=${() => commit(digit(8))}>8</button>
+          <button onclick=${() => commit(digit(7))}>7</button>
+          <button onclick=${() => commit(operator('+'))}>+</button>
+          <button onclick=${() => commit(operator('-'))}>-</button>
+
+          <button onclick=${() => commit(digit(6))}>6</button>
+          <button onclick=${() => commit(digit(5))}>5</button>
+          <button onclick=${() => commit(digit(4))}>4</button>
+          <button onclick=${() => commit(operator('*'))}>*</button>
+          <button onclick=${() => commit(operator('/'))}>/</button>
+
+          <button onclick=${() => commit(digit(3))}>3</button>
+          <button onclick=${() => commit(digit(2))}>2</button>
+          <button onclick=${() => commit(digit(1))}>1</button>
+          <button onclick=${() => commit(operator('%'))}>%</button>
+          <button onclick=${() => commit(operator('**'))}>**</button>
+
+          <button onclick=${() => commit(digit(0))}>0</button>
+          <button onclick=${() => commit(point())}>.</button>
+          <button onclick=${() => commit(negate())}>-/+</button>
+          <button onclick=${() => commit(clear())}>Clear</button>
+          <button onclick=${() => commit(enter())}>Enter</button>
+        </div>`
       }
     })
     </script>
