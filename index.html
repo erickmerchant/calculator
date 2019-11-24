@@ -33,102 +33,196 @@
       }
 
       .calculator {
+        font-family: 'PT Mono', monospace;
         width: 40em;
         display: grid;
-        grid-template-rows: repeat(5, 3em);
-        grid-template-columns: repeat(5, 1fr);
         gap: 0.25em;
-        font-family: 'PT Mono', monospace;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-areas:
+          'output  output  output   output'
+          'plus    minus   divide   multiply'
+          'seven   eight   nine     clear'
+          'four    five    six      equals'
+          'one     two     three    equals'
+          'zero    zero    decimal  equals';
 
         --border: 1px solid hsl(50, 15%, 60%);
+        --hue: 170;
+        --saturation: 15%;
       }
 
       .calculator output {
+        grid-column: 1 / 5;
         display: flex;
-        grid-column: 1 / 6;
-        border: var(--border);
         justify-content: flex-end;
         align-items: center;
+        border: var(--border);
         padding: 1em;
         line-height: 1;
+        height: 3em;
       }
 
       .calculator button {
-        background: hsl(50, 15%, 80%);
+        color: #222;
+        background: hsl(var(--hue), var(--saturation), 80%);
         border: var(--border);
+        min-height: 3em;
+      }
+
+      .calculator button:disabled {
+        color: #444;
+        background: hsl(var(--hue), calc(var(--saturation) / 2), 80%);
+      }
+
+      .clear {
+        grid-area: clear;
+
+        --hue: 350;
+        --saturation: 40%;
+      }
+
+      .plus {
+        grid-area: plus;
+
+        --saturation: 40%;
+      }
+
+      .minus {
+        grid-area: minus;
+
+        --saturation: 40%;
+      }
+
+      .divide {
+        grid-area: divide;
+
+        --saturation: 40%;
+      }
+
+      .multiply {
+        grid-area: multiply;
+
+        --saturation: 40%;
+      }
+
+      .equals {
+        grid-area: equals;
+
+        --hue: 110;
+        --saturation: 40%;
+      }
+
+      .nine {
+        grid-area: nine;
+      }
+
+      .eight {
+        grid-area: eight;
+      }
+
+      .seven {
+        grid-area: seven;
+      }
+
+      .six {
+        grid-area: six;
+      }
+
+      .five {
+        grid-area: five;
+      }
+
+      .four {
+        grid-area: four;
+      }
+
+      .three {
+        grid-area: three;
+      }
+
+      .two {
+        grid-area: two;
+      }
+
+      .one {
+        grid-area: one;
+      }
+
+      .zero {
+        grid-area: zero;
+      }
+
+      .decimal {
+        grid-area: decimal;
       }
     </style>
   </head>
   <body>
-    <div></div>
+    <form></form>
     <script type="module" crossorigin="anonymous">
     import framework, {domUpdate, view} from '@erickmerchant/framework'
 
-    const target = document.querySelector('div')
+    const target = document.querySelector('form')
 
     const update = domUpdate(target)
 
     const {app} = view()
 
     const state = {
-      results: [],
-      current: []
     }
 
-    const digit = (digit) => () => {
+    const digit = (digit) => (state) => state
 
-    }
+    const operator = (operator) => (state) => state
 
-    const operator = (operator) => () => {
+    const decimal = () => (state) => state
 
-    }
+    const clear = () => (state) => state
 
-    const point = () => () => {
+    const enter = () => (state) => state
 
-    }
+    const buttonAttrs = (className, commit, cb, ...args) => {
+      const disabled = false
 
-    const negate = () => () => {
-
-    }
-
-    const clear = () => () => {
-
-    }
-
-    const enter = () => () => {
-
+      return {
+        class: className,
+        disabled,
+        type: 'button',
+        onclick() {
+          commit(cb(...args))
+        }
+      }
     }
 
     framework({
       state,
       update,
       component({state, commit}) {
-        return app`<div class="calculator">
-          <output>afss asdfa  FAAASD  </output>
-          <button onclick=${() => commit(digit(9))}>9</button>
-          <button onclick=${() => commit(digit(8))}>8</button>
-          <button onclick=${() => commit(digit(7))}>7</button>
-          <button onclick=${() => commit(operator('+'))}>+</button>
-          <button onclick=${() => commit(operator('-'))}>-</button>
+        return app`<form class="calculator">
+          <output class="output">${''}</output>
 
-          <button onclick=${() => commit(digit(6))}>6</button>
-          <button onclick=${() => commit(digit(5))}>5</button>
-          <button onclick=${() => commit(digit(4))}>4</button>
-          <button onclick=${() => commit(operator('*'))}>*</button>
-          <button onclick=${() => commit(operator('/'))}>/</button>
+          <button ${buttonAttrs('clear', commit, clear)}>C</button>
+          <button ${buttonAttrs('plus', commit, operator, '+')}>+</button>
+          <button ${buttonAttrs('minus', commit, operator, '-')}>-</button>
+          <button ${buttonAttrs('multiply', commit, operator, '*')}>*</button>
+          <button ${buttonAttrs('divide', commit, operator, '/')}>/</button>
+          <button ${buttonAttrs('equals', commit, enter)}>=</button>
 
-          <button onclick=${() => commit(digit(3))}>3</button>
-          <button onclick=${() => commit(digit(2))}>2</button>
-          <button onclick=${() => commit(digit(1))}>1</button>
-          <button onclick=${() => commit(operator('%'))}>%</button>
-          <button onclick=${() => commit(operator('**'))}>**</button>
+          <button ${buttonAttrs('nine', commit, digit, 9)}>9</button>
+          <button ${buttonAttrs('eight', commit, digit, 8)}>8</button>
+          <button ${buttonAttrs('seven', commit, digit, 7)}>7</button>
 
-          <button onclick=${() => commit(digit(0))}>0</button>
-          <button onclick=${() => commit(point())}>.</button>
-          <button onclick=${() => commit(negate())}>-/+</button>
-          <button onclick=${() => commit(clear())}>Clear</button>
-          <button onclick=${() => commit(enter())}>Enter</button>
-        </div>`
+          <button ${buttonAttrs('six', commit, digit, 6)}>6</button>
+          <button ${buttonAttrs('five', commit, digit, 5)}>5</button>
+          <button ${buttonAttrs('four', commit, digit, 4)}>4</button>
+
+          <button ${buttonAttrs('three', commit, digit, 3)}>3</button>
+          <button ${buttonAttrs('two', commit, digit, 2)}>2</button>
+          <button ${buttonAttrs('one', commit, digit, 1)}>1</button>
+
+          <button ${buttonAttrs('zero', commit, digit, 0)}>0</button>
+          <button ${buttonAttrs('decimal', commit, decimal)}>.</button>
+        </form>`
       }
     })
     </script>
