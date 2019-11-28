@@ -23,8 +23,11 @@
         max-width: 100%;
       }
 
-      body {
+      .flex {
         display: flex;
+      }
+
+      body {
         justify-content: center;
         align-items: center;
         height: 100vh;
@@ -35,7 +38,6 @@
 
       .calculator {
         width: 30em;
-        padding: 1em;
         display: grid;
         gap: 0.25em;
         grid-template-columns: repeat(4, 1fr);
@@ -52,13 +54,18 @@
         --saturation: 15%;
       }
 
+      .calculator,
       .calculator output {
-        grid-column: 1 / 5;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        border: var(--border);
         padding: 1em;
+      }
+
+      .calculator * {
+        border: var(--border);
+      }
+
+      .calculator output {
+        grid-area: output;
+        justify-content: flex-end;
         line-height: 1;
         height: 3em;
       }
@@ -66,7 +73,6 @@
       .calculator button {
         color: #222;
         background: hsl(var(--hue), var(--saturation), 80%);
-        border: var(--border);
         min-height: 3em;
       }
 
@@ -157,7 +163,7 @@
       }
     </style>
   </head>
-  <body>
+  <body class="flex">
     <form></form>
     <script type="module" crossorigin="anonymous">
     import framework, {domUpdate, view} from '@erickmerchant/framework'
@@ -198,7 +204,7 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="output">${''}</output>
+          <output class="flex"></output>
 
           <button ${buttonAttrs('clear', commit, clear)}>C</button>
           <button ${buttonAttrs('plus', commit, operator, '+')}>+</button>
