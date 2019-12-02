@@ -23,10 +23,6 @@
         max-width: 100%;
       }
 
-      .flex {
-        display: flex;
-      }
-
       body {
         justify-content: center;
         align-items: center;
@@ -34,6 +30,11 @@
         font-family: 'PT Mono', monospace;
         font-size: 20px;
         line-height: 1.5;
+        color: #222;
+      }
+
+      .flex {
+        display: flex;
       }
 
       .calculator {
@@ -43,15 +44,13 @@
         grid-template-columns: repeat(4, 1fr);
         grid-template-areas:
           'output  output  output   output'
-          'plus    minus   divide   multiply'
-          'seven   eight   nine     clear'
-          'four    five    six      equals'
-          'one     two     three    equals'
-          'zero    zero    decimal  equals';
+          'seven   eight   nine     plus'
+          'four    five    six      minus'
+          'one     two     three    divide'
+          'zero    zero    decimal  times';
 
-        --border: 1px solid hsl(50, 15%, 60%);
-        --hue: 180;
-        --saturation: 15%;
+        --hue: 200;
+        --saturation: 5%;
       }
 
       .calculator,
@@ -60,7 +59,10 @@
       }
 
       .calculator * {
-        border: var(--border);
+        border-radius: 3px;
+        border: 3px solid var(--background);
+
+        --background: hsl(var(--hue), var(--saturation), 50%);
       }
 
       .calculator output {
@@ -68,31 +70,23 @@
         justify-content: flex-end;
         line-height: 1;
         height: 3em;
+        color: var(--background);
       }
 
       .calculator button {
-        color: #222;
-        background: hsl(var(--hue), var(--saturation), 80%);
+        background: var(--background);
+        color: white;
         min-height: 3em;
       }
 
       .calculator button:disabled {
-        color: #666;
-        background: hsl(var(--hue), calc(var(--saturation) / 2), 80%);
-      }
-
-      .clear {
-        grid-area: clear;
-
-        --hue: 0;
-        --saturation: 80%;
+        --background: hsl(var(--hue), calc(var(--saturation) / 2), 75%);
       }
 
       .plus,
       .minus,
       .divide,
-      .multiply,
-      .equals {
+      .times {
         --saturation: 60%;
       }
 
@@ -108,14 +102,8 @@
         grid-area: divide;
       }
 
-      .multiply {
-        grid-area: multiply;
-      }
-
-      .equals {
-        grid-area: equals;
-
-        --hue: 120;
+      .times {
+        grid-area: times;
       }
 
       .nine {
@@ -166,7 +154,7 @@
   <body class="flex">
     <form></form>
     <script type="module" crossorigin="anonymous">
-    import framework, {domUpdate, view} from '@erickmerchant/framework'
+    import framework, {domUpdate, view, raw} from '@erickmerchant/framework'
 
     const target = document.querySelector('form')
 
@@ -181,10 +169,6 @@
     const operator = (operator) => (state) => state
 
     const decimal = () => (state) => state
-
-    const clear = () => (state) => state
-
-    const enter = () => (state) => state
 
     const buttonAttrs = (className, commit, cb, ...args) => {
       const disabled = false
@@ -204,14 +188,12 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex"></output>
+          <output class="flex">afds</output>
 
-          <button ${buttonAttrs('clear', commit, clear)}>C</button>
-          <button ${buttonAttrs('plus', commit, operator, '+')}>+</button>
-          <button ${buttonAttrs('minus', commit, operator, '-')}>-</button>
-          <button ${buttonAttrs('multiply', commit, operator, '*')}>*</button>
-          <button ${buttonAttrs('divide', commit, operator, '/')}>/</button>
-          <button ${buttonAttrs('equals', commit, enter)}>=</button>
+          <button ${buttonAttrs('plus', commit, operator, '+')}>${raw('&plus;')}</button>
+          <button ${buttonAttrs('minus', commit, operator, '-')}>${raw('&minus;')}</button>
+          <button ${buttonAttrs('times', commit, operator, '*')}>${raw('&times;')}</button>
+          <button ${buttonAttrs('divide', commit, operator, '/')}>${raw('&divide;')}</button>
 
           <button ${buttonAttrs('nine', commit, digit, 9)}>9</button>
           <button ${buttonAttrs('eight', commit, digit, 8)}>8</button>
