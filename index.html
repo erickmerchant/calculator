@@ -23,10 +23,13 @@
         max-width: 100%;
       }
 
+      html,
+      body {
+        height: 100%;
+      }
+
       body {
         justify-content: center;
-        align-items: center;
-        height: 100vh;
         font-family: 'PT Mono', monospace;
         font-size: 20px;
         line-height: 1.5;
@@ -38,6 +41,7 @@
       }
 
       .calculator {
+        margin: auto;
         width: 30em;
         display: grid;
         gap: 0.25em;
@@ -160,7 +164,7 @@
 
     const update = domUpdate(target)
 
-    const {app} = view()
+    const {app, btn} = view()
 
     const state = {}
 
@@ -170,17 +174,16 @@
 
     const decimal = () => (state) => state
 
-    const buttonAttrs = (className, commit, cb, ...args) => {
+    const button = (commit, [cb, ...args], className, txt) => {
       const disabled = false
 
-      return {
-        class: className,
-        disabled,
-        type: 'button',
-        onclick() {
+      return btn`<button
+        type="button"
+        class=${className}
+        disabled=${disabled}
+        onclick=${() => {
           commit(cb(...args))
-        }
-      }
+        }}>${txt}</button>`
     }
 
     framework({
@@ -188,27 +191,22 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex">afds</output>
-
-          <button ${buttonAttrs('plus', commit, operator, '+')}>${raw('&plus;')}</button>
-          <button ${buttonAttrs('minus', commit, operator, '-')}>${raw('&minus;')}</button>
-          <button ${buttonAttrs('times', commit, operator, '*')}>${raw('&times;')}</button>
-          <button ${buttonAttrs('divide', commit, operator, '/')}>${raw('&divide;')}</button>
-
-          <button ${buttonAttrs('nine', commit, digit, 9)}>9</button>
-          <button ${buttonAttrs('eight', commit, digit, 8)}>8</button>
-          <button ${buttonAttrs('seven', commit, digit, 7)}>7</button>
-
-          <button ${buttonAttrs('six', commit, digit, 6)}>6</button>
-          <button ${buttonAttrs('five', commit, digit, 5)}>5</button>
-          <button ${buttonAttrs('four', commit, digit, 4)}>4</button>
-
-          <button ${buttonAttrs('three', commit, digit, 3)}>3</button>
-          <button ${buttonAttrs('two', commit, digit, 2)}>2</button>
-          <button ${buttonAttrs('one', commit, digit, 1)}>1</button>
-
-          <button ${buttonAttrs('zero', commit, digit, 0)}>0</button>
-          <button ${buttonAttrs('decimal', commit, decimal)}>.</button>
+          <output class="flex"></output>
+          ${button(commit, [operator, '+'], 'plus', raw('&plus;'))}
+          ${button(commit, [operator, '-'], 'minus', raw('&minus;'))}
+          ${button(commit, [operator, '*'], 'times', raw('&times;'))}
+          ${button(commit, [operator, '/'], 'divide', raw('&divide;'))}
+          ${button(commit, [digit, 0], 'zero', 0)}
+          ${button(commit, [digit, 1], 'one', 1)}
+          ${button(commit, [digit, 2], 'two', 2)}
+          ${button(commit, [digit, 3], 'three', 3)}
+          ${button(commit, [digit, 4], 'four', 4)}
+          ${button(commit, [digit, 5], 'five', 5)}
+          ${button(commit, [digit, 6], 'six', 6)}
+          ${button(commit, [digit, 7], 'seven', 7)}
+          ${button(commit, [digit, 8], 'eight', 8)}
+          ${button(commit, [digit, 9], 'nine', 9)}
+          ${button(commit, [decimal], 'decimal', '.')}
         </form>`
       }
     })
