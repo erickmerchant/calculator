@@ -50,8 +50,8 @@
           'output  output  output   output'
           'seven   eight   nine     plus'
           'four    five    six      minus'
-          'one     two     three    divide'
-          'zero    zero    decimal  times';
+          'one     two     three    times'
+          'zero    zero    decimal  divide';
 
         --hue: 200;
         --saturation: 5%;
@@ -65,6 +65,7 @@
       .calculator * {
         border-radius: 3px;
         border: 3px solid var(--background);
+        grid-area: var(--grid-area);
 
         --background: hsl(var(--hue), var(--saturation), 50%);
       }
@@ -87,72 +88,10 @@
         --background: hsl(var(--hue), calc(var(--saturation) / 2), 75%);
       }
 
-      .plus,
-      .minus,
-      .divide,
-      .times {
+      .operator {
         --saturation: 60%;
       }
 
-      .plus {
-        grid-area: plus;
-      }
-
-      .minus {
-        grid-area: minus;
-      }
-
-      .divide {
-        grid-area: divide;
-      }
-
-      .times {
-        grid-area: times;
-      }
-
-      .nine {
-        grid-area: nine;
-      }
-
-      .eight {
-        grid-area: eight;
-      }
-
-      .seven {
-        grid-area: seven;
-      }
-
-      .six {
-        grid-area: six;
-      }
-
-      .five {
-        grid-area: five;
-      }
-
-      .four {
-        grid-area: four;
-      }
-
-      .three {
-        grid-area: three;
-      }
-
-      .two {
-        grid-area: two;
-      }
-
-      .one {
-        grid-area: one;
-      }
-
-      .zero {
-        grid-area: zero;
-      }
-
-      .decimal {
-        grid-area: decimal;
-      }
     </style>
   </head>
   <body class="flex">
@@ -168,22 +107,15 @@
 
     const state = {}
 
-    const digit = (digit) => (state) => state
-
-    const operator = (operator) => (state) => state
-
-    const decimal = () => (state) => state
-
-    const button = (commit, [cb, ...args], className, txt) => {
+    const button = (onclick, area, txt) => {
       const disabled = false
 
       return btn`<button
         type="button"
-        class=${className}
+        class=${['plus', 'minus', 'times', 'divide'].includes(area) ? 'operator' : ''}
         disabled=${disabled}
-        onclick=${() => {
-          commit(cb(...args))
-        }}>${txt}</button>`
+        style=${`--grid-area: ${area}`}
+        onclick=${onclick}>${txt}</button>`
     }
 
     framework({
@@ -192,21 +124,21 @@
       component({state, commit}) {
         return app`<form class="calculator">
           <output class="flex"></output>
-          ${button(commit, [operator, '+'], 'plus', raw('&plus;'))}
-          ${button(commit, [operator, '-'], 'minus', raw('&minus;'))}
-          ${button(commit, [operator, '*'], 'times', raw('&times;'))}
-          ${button(commit, [operator, '/'], 'divide', raw('&divide;'))}
-          ${button(commit, [digit, 0], 'zero', 0)}
-          ${button(commit, [digit, 1], 'one', 1)}
-          ${button(commit, [digit, 2], 'two', 2)}
-          ${button(commit, [digit, 3], 'three', 3)}
-          ${button(commit, [digit, 4], 'four', 4)}
-          ${button(commit, [digit, 5], 'five', 5)}
-          ${button(commit, [digit, 6], 'six', 6)}
-          ${button(commit, [digit, 7], 'seven', 7)}
-          ${button(commit, [digit, 8], 'eight', 8)}
-          ${button(commit, [digit, 9], 'nine', 9)}
-          ${button(commit, [decimal], 'decimal', '.')}
+          ${button(() => {}, 'plus', raw('&plus;'))}
+          ${button(() => {}, 'minus', raw('&minus;'))}
+          ${button(() => {}, 'times', raw('&times;'))}
+          ${button(() => {}, 'divide', raw('&divide;'))}
+          ${button(() => {}, 'zero', 0)}
+          ${button(() => {}, 'one', 1)}
+          ${button(() => {}, 'two', 2)}
+          ${button(() => {}, 'three', 3)}
+          ${button(() => {}, 'four', 4)}
+          ${button(() => {}, 'five', 5)}
+          ${button(() => {}, 'six', 6)}
+          ${button(() => {}, 'seven', 7)}
+          ${button(() => {}, 'eight', 8)}
+          ${button(() => {}, 'nine', 9)}
+          ${button(() => {}, 'decimal', '.')}
         </form>`
       }
     })
