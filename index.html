@@ -31,7 +31,7 @@
       body {
         justify-content: center;
         font-family: 'PT Mono', monospace;
-        font-size: 20px;
+        font-size: 24px;
         line-height: 1.5;
         color: #222;
       }
@@ -42,16 +42,17 @@
 
       .calculator {
         margin: auto;
-        width: 30em;
+        width: 20em;
         display: grid;
         gap: 0.25em;
         grid-template-columns: repeat(4, 1fr);
         grid-template-areas:
-          'output  output  output   output'
-          'seven   eight   nine     plus'
-          'four    five    six      minus'
-          'one     two     three    times'
-          'zero    zero    decimal  divide';
+          'output  output   output  output'
+          'clear   plus     minus   times'
+          'seven   eight    nine    divide'
+          'four    five     six     equals'
+          'one     two      three   equals'
+          'zero    decimal  sign    equals';
 
         --hue: 200;
         --saturation: 5%;
@@ -88,8 +89,12 @@
         --background: hsl(var(--hue), calc(var(--saturation) / 2), 75%);
       }
 
-      .operator {
+      .operator, .clear {
         --saturation: 60%;
+      }
+
+      .clear {
+        --hue: 350;
       }
 
     </style>
@@ -105,14 +110,29 @@
 
     const {app, btn} = view()
 
-    const state = {}
+    const state = {
+      output: '',
+      input1: '',
+      input2: '',
+      operator: null
+    }
 
     const button = (onclick, area, txt) => {
       const disabled = false
 
+      let className = ''
+
+      if (['plus', 'minus', 'times', 'divide', 'equals'].includes(area)) {
+        className = 'operator'
+      }
+
+      if (area === 'clear') {
+        className = 'clear'
+      }
+
       return btn`<button
         type="button"
-        class=${['plus', 'minus', 'times', 'divide'].includes(area) ? 'operator' : ''}
+        class=${className}
         disabled=${disabled}
         style=${`--grid-area: ${area}`}
         onclick=${onclick}>${txt}</button>`
@@ -123,11 +143,13 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex"></output>
+          <output class="flex">${state.output}</output>
+          ${button(() => {}, 'clear', 'AC')}
           ${button(() => {}, 'plus', raw('&plus;'))}
           ${button(() => {}, 'minus', raw('&minus;'))}
           ${button(() => {}, 'times', raw('&times;'))}
           ${button(() => {}, 'divide', raw('&divide;'))}
+          ${button(() => {}, 'equals', raw('&equals;'))}
           ${button(() => {}, 'zero', 0)}
           ${button(() => {}, 'one', 1)}
           ${button(() => {}, 'two', 2)}
@@ -139,6 +161,7 @@
           ${button(() => {}, 'eight', 8)}
           ${button(() => {}, 'nine', 9)}
           ${button(() => {}, 'decimal', '.')}
+          ${button(() => {}, 'sign', raw('&plusmn;'))}
         </form>`
       }
     })
