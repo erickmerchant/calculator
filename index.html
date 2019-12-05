@@ -113,12 +113,10 @@
 
     const state = {
       output: '',
-      input1: '',
-      input2: '',
-      operator: null
+      stack: []
     }
 
-    const button = (onclick, area, txt) => {
+    const button = (commit, onclick, area, txt) => {
       const disabled = false
 
       let className = ''
@@ -136,7 +134,91 @@
         class=${className}
         disabled=${disabled}
         style=${`--grid-area: ${area}`}
-        onclick=${onclick}>${txt}</button>`
+        onclick=${() => {
+          commit(onclick)
+        }}>${txt}</button>`
+    }
+
+    const calculate = (state) => {
+      if (state.stack.length !== 3) return state
+
+      let result
+
+      switch (state.stack[1]) {
+        case '+':
+          result = Number(state.stack[0]) + Number(state.stack[2])
+          break
+
+        case '-':
+          result = Number(state.stack[0]) - Number(state.stack[2])
+          break
+
+        case '*':
+          result = Number(state.stack[0]) * Number(state.stack[2])
+          break
+
+        case '/':
+          result = Number(state.stack[0]) / Number(state.stack[2])
+          break
+      }
+
+      state.output = String(result)
+
+      state.stack = [String(result)]
+
+      return state
+    }
+
+    const operator = (operator) => (state) => {
+      switch (state.stack.length) {
+        case 1:
+          state.stack.push(operator)
+          break
+
+        case 2:
+          state[1] = operator
+          break
+
+        case 3:
+          calculate(state)
+      }
+
+      return state
+    }
+
+    const character = (character) => (state) => {
+      switch (state.stack.length) {
+        case 1:
+        case 3:
+          if (character === '.' && state.stack[state.stack.length - 1].includes('.')) return state
+
+          state.stack[state.stack.length - 1] += character
+          break
+
+        case 0:
+        case 2:
+          if (['.', '0'].includes(character)) return state
+
+          state.stack.push(character)
+      }
+
+      return state
+    }
+
+    const sign = (state) => {
+      const index = state.stack.length - 1
+
+      switch (state.stack.length) {
+        case 1:
+        case 3:
+          if (state.stack[index].startsWith('-')) {
+            state.stack[index] = state.stack[index].substring(1)
+          } else {
+            state.stack[index] = `-${state.stack[index]}`
+          }
+      }
+
+      return state
     }
 
     framework({
@@ -144,25 +226,30 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex">${state.output}</output>
-          ${button(() => {}, 'clear', 'AC')}
-          ${button(() => {}, 'plus', raw('&plus;'))}
-          ${button(() => {}, 'minus', raw('&minus;'))}
-          ${button(() => {}, 'times', raw('&times;'))}
-          ${button(() => {}, 'divide', raw('&divide;'))}
-          ${button(() => {}, 'equals', raw('&equals;'))}
-          ${button(() => {}, 'zero', 0)}
-          ${button(() => {}, 'one', 1)}
-          ${button(() => {}, 'two', 2)}
-          ${button(() => {}, 'three', 3)}
-          ${button(() => {}, 'four', 4)}
-          ${button(() => {}, 'five', 5)}
-          ${button(() => {}, 'six', 6)}
-          ${button(() => {}, 'seven', 7)}
-          ${button(() => {}, 'eight', 8)}
-          ${button(() => {}, 'nine', 9)}
-          ${button(() => {}, 'decimal', '.')}
-          ${button(() => {}, 'sign', raw('&plusmn;'))}
+          <output class="flex">${state.stack.length ? state.stack[state.stack.length - (state.stack.length !== 2 ? 1 : 2)] : state.output}</output>
+          ${button(commit, () => {
+            return {
+              output: '',
+              stack: []
+            }
+          }, 'clear', 'AC')}
+          ${button(commit, operator('+'), 'plus', raw('&plus;'))}
+          ${button(commit, operator('-'), 'minus', raw('&minus;'))}
+          ${button(commit, operator('*'), 'times', raw('&times;'))}
+          ${button(commit, operator('/'), 'divide', raw('&divide;'))}
+          ${button(commit, calculate, 'equals', raw('&equals;'))}
+          ${button(commit, character('0'), 'zero', 0)}
+          ${button(commit, character('1'), 'one', 1)}
+          ${button(commit, character('2'), 'two', 2)}
+          ${button(commit, character('3'), 'three', 3)}
+          ${button(commit, character('4'), 'four', 4)}
+          ${button(commit, character('5'), 'five', 5)}
+          ${button(commit, character('6'), 'six', 6)}
+          ${button(commit, character('7'), 'seven', 7)}
+          ${button(commit, character('8'), 'eight', 8)}
+          ${button(commit, character('9'), 'nine', 9)}
+          ${button(commit, character('.'), 'decimal', '.')}
+          ${button(commit, sign, 'sign', raw('&plusmn;'))}
         </form>`
       }
     })
