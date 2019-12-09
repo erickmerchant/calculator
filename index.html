@@ -85,10 +85,6 @@
         min-height: 3em;
       }
 
-      .calculator button:disabled {
-        --background: hsl(var(--hue), calc(var(--saturation) / 2), 75%);
-      }
-
       .operator,
       .clear {
         --saturation: 60%;
@@ -111,14 +107,7 @@
 
     const {app, btn} = view()
 
-    const state = {
-      output: '',
-      stack: []
-    }
-
     const button = (commit, onclick, area, txt) => {
-      const disabled = false
-
       let className = ''
 
       if (['plus', 'minus', 'times', 'divide', 'equals'].includes(area)) {
@@ -132,93 +121,123 @@
       return btn`<button
         type="button"
         class=${className}
-        disabled=${disabled}
         style=${`--grid-area: ${area}`}
         onclick=${() => {
           commit(onclick)
         }}>${txt}</button>`
     }
 
-    const calculate = (state) => {
-      if (state.stack.length !== 3) return state
+    const clear = () => {
+      return {
+        output: null,
+        left: null,
+        operator: null,
+        right: null,
+        done: false
+      }
+    }
 
-      let result
+    const state = clear()
 
-      switch (state.stack[1]) {
+    const equals = (state) => {
+      if (state.left == null || state.operator == null || state.right == null) {
+        return state
+      }
+
+      state.output = 'left'
+
+      const left = Number(state.left)
+      const right = Number(state.right)
+
+      switch (state.operator) {
         case '+':
-          result = Number(state.stack[0]) + Number(state.stack[2])
+          state.left = left + right
           break
 
         case '-':
-          result = Number(state.stack[0]) - Number(state.stack[2])
+          state.left = left - right
           break
 
         case '*':
-          result = Number(state.stack[0]) * Number(state.stack[2])
+          state.left = left * right
           break
 
         case '/':
-          result = Number(state.stack[0]) / Number(state.stack[2])
+          state.left = left / right
           break
       }
 
-      state.output = String(result)
-
-      state.stack = [String(result)]
+      state.done = true
 
       return state
     }
 
     const operator = (operator) => (state) => {
-      switch (state.stack.length) {
-        case 1:
-          state.stack.push(operator)
-          break
-
-        case 2:
-          state[1] = operator
-          break
-
-        case 3:
-          calculate(state)
+      if (state.left == null) {
+        return state
       }
+
+      if (state.output === 'right') {
+        equals(state)
+      }
+
+      state.right = null
+
+      state.operator = operator
+
+      state.done = false
 
       return state
     }
 
     const character = (character) => (state) => {
-      switch (state.stack.length) {
-        case 1:
-        case 3:
-          if (character === '.' && state.stack[state.stack.length - 1].includes('.')) return state
-
-          state.stack[state.stack.length - 1] += character
-          break
-
-        case 0:
-        case 2:
-          if (['.', '0'].includes(character)) return state
-
-          state.stack.push(character)
+      if (state.done) {
+        state = clear()
       }
+
+      let target = 'right'
+
+      if (state.operator == null) {
+        target = 'left'
+      }
+
+      if (state[target] == null) {
+        state[target] = character
+      } else if (character !== '.' || !state[target].includes('.')) {
+        state[target] += character
+      }
+
+      state.output = target
 
       return state
     }
 
     const sign = (state) => {
-      const index = state.stack.length - 1
+      const target = state.output
 
-      switch (state.stack.length) {
-        case 1:
-        case 3:
-          if (state.stack[index].startsWith('-')) {
-            state.stack[index] = state.stack[index].substring(1)
-          } else {
-            state.stack[index] = `-${state.stack[index]}`
-          }
+      if (state[target] != null) {
+        const string = String(state[target])
+
+        if (string.startsWith('-')) {
+          state[target] = string.substring(1)
+        } else {
+          state[target] = `-${string}`
+        }
       }
 
       return state
+    }
+
+    const format = (value) => {
+      const [first, last] = String(value).split('.')
+
+      let result = Number(first) || '0'
+
+      if (last != null) {
+        result += `.${last || '0'}`
+      }
+
+      return result
     }
 
     framework({
@@ -226,18 +245,13 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex">${state.stack.length ? state.stack[state.stack.length - (state.stack.length !== 2 ? 1 : 2)] : state.output}</output>
-          ${button(commit, () => {
-            return {
-              output: '',
-              stack: []
-            }
-          }, 'clear', 'AC')}
+          <output class="flex">${state.output ? format(state[state.output]) : 0}</output>
+          ${button(commit, clear, 'clear', 'AC')}
           ${button(commit, operator('+'), 'plus', raw('&plus;'))}
           ${button(commit, operator('-'), 'minus', raw('&minus;'))}
           ${button(commit, operator('*'), 'times', raw('&times;'))}
           ${button(commit, operator('/'), 'divide', raw('&divide;'))}
-          ${button(commit, calculate, 'equals', raw('&equals;'))}
+          ${button(commit, equals, 'equals', raw('&equals;'))}
           ${button(commit, character('0'), 'zero', 0)}
           ${button(commit, character('1'), 'one', 1)}
           ${button(commit, character('2'), 'two', 2)}
