@@ -216,28 +216,12 @@
       const target = state.output
 
       if (state[target] != null) {
-        const string = String(state[target])
+        const number = Number(state[target])
 
-        if (string.startsWith('-')) {
-          state[target] = string.substring(1)
-        } else {
-          state[target] = `-${string}`
-        }
+        state[target] = number * -1
       }
 
       return state
-    }
-
-    const format = (value) => {
-      const [first, last] = String(value).split('.')
-
-      let result = Number(first) || '0'
-
-      if (last != null) {
-        result += `.${last || '0'}`
-      }
-
-      return result
     }
 
     framework({
@@ -245,7 +229,7 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex">${state.output ? format(state[state.output]) : 0}</output>
+          <output class="flex">${state.output ? state[state.output] : 0}</output>
           ${button(commit, clear, 'clear', 'AC')}
           ${button(commit, operator('+'), 'plus', raw('&plus;'))}
           ${button(commit, operator('-'), 'minus', raw('&minus;'))}
