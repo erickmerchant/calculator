@@ -202,7 +202,7 @@
       }
 
       if (state[target] == null) {
-        state[target] = character
+        state[target] = character === '.' ? '0.' : '.'
       } else if (character !== '.' || !state[target].includes('.')) {
         state[target] += character
       }
@@ -224,12 +224,31 @@
       return state
     }
 
+    const format = (val) => {
+      if (typeof val === 'number') return val
+
+      const index = val.indexOf('.')
+      const number = Number(val)
+
+      if (index < 0) {
+        return number
+      }
+
+      const digits = val.length - index - 1
+
+      if (digits) {
+        return number.toFixed(digits)
+      }
+
+      return number.toFixed(1)
+    }
+
     framework({
       state,
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex">${state.output ? state[state.output] : 0}</output>
+          <output class="flex">${state.output ? format(state[state.output]) : '0'}</output>
           ${button(commit, clear, 'clear', 'AC')}
           ${button(commit, operator('+'), 'plus', raw('&plus;'))}
           ${button(commit, operator('-'), 'minus', raw('&minus;'))}
