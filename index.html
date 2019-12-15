@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="document">
   <head>
     <meta charset="utf-8"/>
     <style>
@@ -23,27 +23,25 @@
         max-width: 100%;
       }
 
-      html,
-      body {
+      .document {
         height: 100%;
       }
 
-      body {
+      .body {
         justify-content: center;
         font-family: 'PT Mono', monospace;
         font-size: 24px;
         line-height: 1.5;
         color: #222;
-      }
-
-      .flex {
         display: flex;
+        height: 100%;
       }
 
       .calculator {
+        display: grid;
         margin: auto;
         width: 20em;
-        display: grid;
+        padding: 1em;
         gap: 0.25em;
         grid-template-columns: repeat(4, 1fr);
         grid-template-areas:
@@ -58,12 +56,8 @@
         --saturation: 5%;
       }
 
-      .calculator,
-      .calculator output {
-        padding: 1em;
-      }
-
-      .calculator * {
+      .output,
+      .button {
         border-radius: 3px;
         border: 3px solid var(--background);
         grid-area: var(--grid-area);
@@ -71,7 +65,9 @@
         --background: hsl(var(--hue), var(--saturation), 50%);
       }
 
-      .calculator output {
+      .output {
+        display: flex;
+        padding: 1em;
         grid-area: output;
         justify-content: flex-end;
         line-height: 1;
@@ -79,7 +75,7 @@
         color: var(--background);
       }
 
-      .calculator button {
+      .button {
         background: var(--background);
         color: white;
         min-height: 3em;
@@ -96,7 +92,7 @@
 
     </style>
   </head>
-  <body class="flex">
+  <body class="body">
     <form></form>
     <script type="module" crossorigin="anonymous">
     import framework, {domUpdate, view, raw} from '@erickmerchant/framework'
@@ -108,14 +104,14 @@
     const {app, btn} = view()
 
     const button = (commit, onclick, area, txt) => {
-      let className = ''
+      let className = 'button'
 
       if (['plus', 'minus', 'times', 'divide', 'equals'].includes(area)) {
-        className = 'operator'
+        className += ' operator'
       }
 
       if (area === 'clear') {
-        className = 'clear'
+        className += ' clear'
       }
 
       return btn`<button
@@ -202,7 +198,7 @@
       }
 
       if (state[target] == null) {
-        state[target] = character === '.' ? '0.' : '.'
+        state[target] = character === '.' ? '0.' : character
       } else if (character !== '.' || !state[target].includes('.')) {
         state[target] += character
       }
@@ -248,7 +244,7 @@
       update,
       component({state, commit}) {
         return app`<form class="calculator">
-          <output class="flex">${state.output ? format(state[state.output]) : '0'}</output>
+          <output class="output">${state.output ? format(state[state.output]) : '0'}</output>
           ${button(commit, clear, 'clear', 'AC')}
           ${button(commit, operator('+'), 'plus', raw('&plus;'))}
           ${button(commit, operator('-'), 'minus', raw('&minus;'))}
