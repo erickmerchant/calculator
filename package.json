@@ -19,7 +19,7 @@
     "start": "dev serve ."
   },
   "keywords": [],
-  "author": "",
+  "author": "Erick Merchant <erickmerchant@gmail.com>",
   "license": "ISC",
   "engines": {
     "node": ">=12"
