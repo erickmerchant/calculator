@@ -1,8 +1,7 @@
 {
   "name": "calculator",
-  "private": true,
   "version": "1.0.0",
-  "description": "",
+  "author": "Erick Merchant <erickmerchant@gmail.com>",
   "dependencies": {
     "@erickmerchant/dev-cli": "^9.1.4",
     "@erickmerchant/framework": "^29.1.1",
@@ -13,15 +12,15 @@
     "eslint": "^6.7.2",
     "stylelint": "^12.0.0"
   },
-  "scripts": {
-    "pretest": "lint index.html",
-    "test": "exit 0",
-    "start": "dev serve ."
-  },
-  "keywords": [],
-  "author": "Erick Merchant <erickmerchant@gmail.com>",
-  "license": "ISC",
   "engines": {
     "node": ">=12"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "private": true,
+  "scripts": {
+    "pretest": "lint index.html",
+    "start": "dev serve .",
+    "test": "exit 0"
   }
 }
