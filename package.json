@@ -6,7 +6,7 @@
   "dependencies": {
     "@erickmerchant/dev-cli": "^9.1.4",
     "@erickmerchant/framework": "^29.1.1",
-    "@erickmerchant/lint": "^3.6.1"
+    "@erickmerchant/lint": "^3.6.2"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
