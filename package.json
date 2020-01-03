@@ -11,7 +11,7 @@
     "test": "exit 0"
   },
   "dependencies": {
-    "@erickmerchant/dev-cli": "^9.1.4",
+    "@erickmerchant/dev-cli": "^9.1.5",
     "@erickmerchant/framework": "^29.1.1"
   },
   "devDependencies": {
