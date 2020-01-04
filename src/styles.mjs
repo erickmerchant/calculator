@@ -39,6 +39,15 @@ export default {
       height: 100%;
     }
   `,
+  app: `
+    justify-content: center;
+    font-family: 'PT Mono', monospace;
+    font-size: 24px;
+    line-height: 1.5;
+    color: #222;
+    display: flex;
+    height: 100%;
+  `,
   form: `
     display: grid;
     margin: auto;
@@ -76,14 +85,5 @@ export default {
     ${button}
     --hue: 350;
     --saturation: 60%;
-  `,
-  app: `
-    justify-content: center;
-    font-family: 'PT Mono', monospace;
-    font-size: 24px;
-    line-height: 1.5;
-    color: #222;
-    display: flex;
-    height: 100%;
   `
 }
