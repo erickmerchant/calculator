@@ -6,11 +6,15 @@
   "license": "ISC",
   "author": "Erick Merchant <erickmerchant@gmail.com>",
   "scripts": {
-    "start": "dev serve .",
-    "pretest": "lint index.html",
+    "prebuild": "css src/styles.mjs src/out/styles",
+    "build": "dev cache src dist",
+    "prestart": "npm run prebuild -- -w &",
+    "start": "dev serve src",
+    "pretest": "lint src/*",
     "test": "exit 0"
   },
   "dependencies": {
+    "@erickmerchant/css": "^17.0.4",
     "@erickmerchant/dev-cli": "^9.1.5",
     "@erickmerchant/framework": "^29.1.1"
   },
