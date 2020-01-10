@@ -31,7 +31,7 @@ const button = `
 `
 
 export default {
-  _before: `
+  _start: `
     @font-face {
       font-display: swap;
       font-family: 'PT Mono';
