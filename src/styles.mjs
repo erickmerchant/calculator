@@ -30,32 +30,33 @@ const button = `
   background-color: var(--background-color);
 `
 
-export default {
-  _start: `
-    @font-face {
-      font-display: swap;
-      font-family: 'PT Mono';
-      font-style: normal;
-      font-weight: 400;
-      src:
-        local('PT Mono'),
-        local('PTMono-Regular'),
-        url('/fonts/pt-mono-v7-latin-regular.woff2') format('woff2'),
-        url('/fonts/pt-mono-v7-latin-regular.woff') format('woff');
-    }
+export const _start = `
+  @font-face {
+    font-display: swap;
+    font-family: 'PT Mono';
+    font-style: normal;
+    font-weight: 400;
+    src:
+      local('PT Mono'),
+      local('PTMono-Regular'),
+      url('/fonts/pt-mono-v7-latin-regular.woff2') format('woff2'),
+      url('/fonts/pt-mono-v7-latin-regular.woff') format('woff');
+  }
 
-    * {
-      box-sizing: border-box;
-      font: inherit;
-      margin: 0;
-      padding: 0;
-      max-width: 100%;
-    }
+  * {
+    box-sizing: border-box;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    max-width: 100%;
+  }
 
-    html {
-      height: 100%;
-    }
-  `,
+  html {
+    height: 100%;
+  }
+`
+
+export const styles = {
   app: `
     justify-content: center;
     font-family: 'PT Mono', monospace;

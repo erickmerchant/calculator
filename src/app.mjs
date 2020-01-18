@@ -1,5 +1,5 @@
 import {classes} from './out/styles.mjs'
-import framework, {domUpdate, view, raw} from '@erickmerchant/framework'
+import {render, domUpdate, view, raw} from '@erickmerchant/framework'
 
 const target = document.querySelector('body')
 
@@ -143,7 +143,7 @@ const format = (val) => {
   return number.toFixed(1)
 }
 
-framework({
+render({
   state,
   update,
   component({state, commit}) {
