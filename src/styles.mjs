@@ -1,12 +1,4 @@
 const element = `
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-top-width: 3px;
-  border-bottom-width: 3px;
-  border-right-width: 3px;
-  border-left-width: 3px;
   border-top-style: solid;
   border-bottom-style: solid;
   border-right-style: solid;
@@ -20,6 +12,7 @@ const element = `
   grid-column-start: var(--grid-area);
   grid-column-end: var(--grid-area);
 
+  --border-radius: 3px;
   --background-color: hsl(var(--hue), var(--saturation), 50%);
 `
 
@@ -49,6 +42,7 @@ export const _start = `
     margin: 0;
     padding: 0;
     max-width: 100%;
+    border-radius: 3px;
   }
 
   html {
