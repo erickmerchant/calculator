@@ -12,7 +12,6 @@ const element = `
   grid-column-start: var(--grid-area);
   grid-column-end: var(--grid-area);
 
-  --border-radius: 3px;
   --background-color: hsl(var(--hue), var(--saturation), 50%);
 `
 
