@@ -7,6 +7,8 @@ const element = `
   grid-column-end: var(--grid-area);
 
   --background-color: hsl(var(--hue), var(--saturation), 50%);
+  --hue: 200;
+  --saturation: 5%;
 `
 
 const button = `
@@ -67,11 +69,7 @@ export const styles = {
       'four    five     six     equals'
       'one     two      three   equals'
       'zero    decimal  sign    equals';
-
-    --hue: 200;
-    --saturation: 5%;
   `,
-  button,
   output: `
     ${element}
     display: flex;
@@ -85,6 +83,7 @@ export const styles = {
     height: 3em;
     color: var(--background-color);
   `,
+  button,
   operator: `
     ${button}
     --saturation: 60%;
