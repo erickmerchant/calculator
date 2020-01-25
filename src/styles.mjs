@@ -1,12 +1,6 @@
 const element = `
-  border-top-style: solid;
-  border-bottom-style: solid;
-  border-right-style: solid;
-  border-left-style: solid;
-  border-top-color: var(--background-color);
-  border-bottom-color: var(--background-color);
-  border-right-color: var(--background-color);
-  border-left-color: var(--background-color);
+  border-style: solid;
+  border-color: var(--background-color);
   grid-row-start: var(--grid-area);
   grid-row-end: var(--grid-area);
   grid-column-start: var(--grid-area);
@@ -61,15 +55,9 @@ export const styles = {
   `,
   form: `
     display: grid;
-    margin-top: auto;
-    margin-bottom: auto;
-    margin-right: auto;
-    margin-left: auto;
+    margin: auto;
     width: 20em;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-right: 1em;
-    padding-left: 1em;
+    padding: 1em;
     gap: 0.25em;
     grid-template-columns: repeat(4, 1fr);
     grid-template-areas:
@@ -87,10 +75,7 @@ export const styles = {
   output: `
     ${element}
     display: flex;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-right: 1em;
-    padding-left: 1em;
+    padding: 1em;
     grid-row-start: output;
     grid-row-end: output;
     grid-column-start: output;
