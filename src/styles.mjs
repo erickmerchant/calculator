@@ -1,23 +1,3 @@
-const element = `
-  border-style: solid;
-  border-color: var(--background-color);
-  grid-row-start: var(--grid-area);
-  grid-row-end: var(--grid-area);
-  grid-column-start: var(--grid-area);
-  grid-column-end: var(--grid-area);
-
-  --background-color: hsl(var(--hue), var(--saturation), 50%);
-  --hue: 200;
-  --saturation: 5%;
-`
-
-const button = `
-  ${element}
-  color: white;
-  min-height: 3em;
-  background-color: var(--background-color);
-`
-
 export const _start = `
   @font-face {
     font-display: swap;
@@ -43,6 +23,26 @@ export const _start = `
   html {
     height: 100%;
   }
+`
+
+const element = `
+  border-style: solid;
+  border-color: var(--background-color);
+  grid-row-start: var(--grid-area);
+  grid-row-end: var(--grid-area);
+  grid-column-start: var(--grid-area);
+  grid-column-end: var(--grid-area);
+
+  --background-color: hsl(var(--hue), var(--saturation), 50%);
+  --hue: 200;
+  --saturation: 5%;
+`
+
+const button = `
+  ${element}
+  color: white;
+  min-height: 3em;
+  background-color: var(--background-color);
 `
 
 export const styles = {
@@ -74,14 +74,12 @@ export const styles = {
     ${element}
     display: flex;
     padding: 1em;
-    grid-row-start: output;
-    grid-row-end: output;
-    grid-column-start: output;
-    grid-column-end: output;
     justify-content: flex-end;
     line-height: 1;
     height: 3em;
     color: var(--background-color);
+
+    --grid-area: output;
   `,
   button,
   operator: `
