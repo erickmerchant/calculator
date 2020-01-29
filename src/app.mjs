@@ -155,18 +155,18 @@ render({
         ${button(commit, operator('+'), 'plus', raw('&plus;'))}
         ${button(commit, operator('-'), 'minus', raw('&minus;'))}
         ${button(commit, operator('*'), 'times', raw('&times;'))}
-        ${button(commit, operator('/'), 'divide', raw('&divide;'))}
-        ${button(commit, equals, 'equals', raw('&equals;'))}
-        ${button(commit, character('0'), 'zero', 0)}
-        ${button(commit, character('1'), 'one', 1)}
-        ${button(commit, character('2'), 'two', 2)}
-        ${button(commit, character('3'), 'three', 3)}
-        ${button(commit, character('4'), 'four', 4)}
-        ${button(commit, character('5'), 'five', 5)}
-        ${button(commit, character('6'), 'six', 6)}
         ${button(commit, character('7'), 'seven', 7)}
         ${button(commit, character('8'), 'eight', 8)}
         ${button(commit, character('9'), 'nine', 9)}
+        ${button(commit, operator('/'), 'divide', raw('&divide;'))}
+        ${button(commit, character('4'), 'four', 4)}
+        ${button(commit, character('5'), 'five', 5)}
+        ${button(commit, character('6'), 'six', 6)}
+        ${button(commit, equals, 'equals', raw('&equals;'))}
+        ${button(commit, character('1'), 'one', 1)}
+        ${button(commit, character('2'), 'two', 2)}
+        ${button(commit, character('3'), 'three', 3)}
+        ${button(commit, character('0'), 'zero', 0)}
         ${button(commit, character('.'), 'decimal', '.')}
         ${button(commit, sign, 'sign', raw('&plusmn;'))}
       </form>

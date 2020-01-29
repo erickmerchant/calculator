@@ -13,7 +13,7 @@ export const _start = `
 
   * {
     box-sizing: border-box;
-    font: inherit;
+    font: 24px/1.5 'PT Mono', monospace;
     margin: 0;
     padding: 0;
     max-width: 100%;
@@ -26,12 +26,8 @@ export const _start = `
 `
 
 const element = `
-  border-style: solid;
-  border-color: var(--background-color);
-  grid-row-start: var(--grid-area);
-  grid-row-end: var(--grid-area);
-  grid-column-start: var(--grid-area);
-  grid-column-end: var(--grid-area);
+  border: 3px solid var(--background-color);
+  grid-area: var(--grid-area);
 
   --background-color: hsl(var(--hue), var(--saturation), 50%);
   --hue: 200;
@@ -48,9 +44,6 @@ const button = `
 export const styles = {
   app: `
     justify-content: center;
-    font-family: 'PT Mono', monospace;
-    font-size: 24px;
-    line-height: 1.5;
     color: #222;
     display: flex;
     height: 100%;
