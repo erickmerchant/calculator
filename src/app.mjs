@@ -1,11 +1,9 @@
 import {classes} from './out/styles.mjs'
-import {render, domUpdate, view, raw} from '@erickmerchant/framework'
+import {render, domUpdate, html, raw} from '@erickmerchant/framework'
 
 const target = document.querySelector('body')
 
 const update = domUpdate(target)
-
-const {app, btn} = view()
 
 const button = (commit, onclick, area, txt) => {
   let className = classes.button
@@ -18,7 +16,7 @@ const button = (commit, onclick, area, txt) => {
     className = classes.clear
   }
 
-  return btn`<button
+  return html`<button
     type="button"
     class=${className}
     style=${`--grid-area: ${area}`}
@@ -147,7 +145,7 @@ render({
   state,
   update,
   component({state, commit}) {
-    return app`
+    return html`
     <body class=${classes.app}>
       <form class=${classes.form}>
         <output class=${classes.output}>${state.output ? format(state[state.output]) : '0'}</output>
