@@ -16,7 +16,7 @@
   "dependencies": {
     "@erickmerchant/css": "^20.3.1",
     "@erickmerchant/dev-cli": "^9.1.6",
-    "@erickmerchant/framework": "^31.0.1"
+    "@erickmerchant/framework": "^31.0.2"
   },
   "devDependencies": {
     "@erickmerchant/lint": "^4.0.0",
