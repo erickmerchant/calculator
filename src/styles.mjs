@@ -31,7 +31,7 @@ const element = `
 
   --background-color: hsl(var(--hue), var(--saturation), 50%);
   --hue: 200;
-  --saturation: 5%;
+  --saturation: 15%;
 `
 
 const button = `
