@@ -19,7 +19,7 @@
     "@erickmerchant/framework": "^32.1.1"
   },
   "devDependencies": {
-    "@erickmerchant/lint": "^4.1.0",
+    "@erickmerchant/lint": "^4.1.1",
     "babel-eslint": "^10.0.3"
   },
   "engines": {
