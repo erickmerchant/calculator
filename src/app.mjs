@@ -155,7 +155,7 @@ const format = (val) => {
   const index = val.indexOf('.')
   const number = Number(val)
 
-  if (index < 0) {
+  if (index === -1) {
     return number
   }
 
