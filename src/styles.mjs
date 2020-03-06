@@ -25,22 +25,6 @@ export const _start = `
   }
 `
 
-const element = `
-  border: 3px solid var(--background-color);
-  grid-area: var(--grid-area);
-
-  --background-color: hsl(var(--hue), var(--saturation), 50%);
-  --hue: 200;
-  --saturation: 15%;
-`
-
-const button = `
-  ${element}
-  color: white;
-  min-height: 3em;
-  background-color: var(--background-color);
-`
-
 export const styles = {
   app: `
     justify-content: center;
@@ -63,8 +47,16 @@ export const styles = {
       'one     two      three   equals'
       'zero    decimal  sign    equals';
   `,
-  output: `
-    ${element}
+  element: `
+    border: 3px solid var(--background-color);
+    grid-area: var(--grid-area);
+
+    --background-color: hsl(var(--hue), var(--saturation), 50%);
+    --hue: 200;
+    --saturation: 15%;
+  `,
+  output: (styles) => `
+    ${styles.element}
     display: flex;
     padding: 1em;
     justify-content: flex-end;
@@ -74,13 +66,18 @@ export const styles = {
 
     --grid-area: output;
   `,
-  button,
-  operator: `
-    ${button}
+  button: (styles) => `
+    ${styles.element}
+    color: white;
+    min-height: 3em;
+    background-color: var(--background-color);
+  `,
+  operator: (styles) => `
+    ${styles.button(styles)}
     --saturation: 60%;
   `,
-  clear: `
-    ${button}
+  clear: (styles) => `
+    ${styles.button(styles)}
     --hue: 350;
     --saturation: 60%;
   `
