@@ -21,13 +21,13 @@ const defaultState = {
   done: false
 }
 
-const state = {...defaultState}
+const state = Object.assign({}, defaultState)
 
 const clear = (commit) => button(
   commit,
   {
     onclick() {
-      return {...defaultState}
+      return Object.assign({}, defaultState)
     },
     classes: classes.clear,
     area: 'clear',
