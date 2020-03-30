@@ -71,6 +71,7 @@ const equals = (commit) => button(
       return state
     },
     area: 'equals',
+    classes: classes.operator,
     text: raw('&equals;')
   }
 )
@@ -177,21 +178,24 @@ render({
       <form class=${classes.form}>
         <output class=${classes.output}>${state.output ? format(state[state.output]) : '0'}</output>
         ${clear(commit)}
-        ${operator(commit, '+', 'plus', raw('&plus;'))}
-        ${operator(commit, '-', 'minus', raw('&minus;'))}
-        ${operator(commit, '*', 'times', raw('&times;'))}
-        ${character(commit, '7', 'seven', 7)}
-        ${character(commit, '8', 'eight', 8)}
-        ${character(commit, '9', 'nine', 9)}
-        ${operator(commit, '/', 'divide', raw('&divide;'))}
-        ${character(commit, '4', 'four', 4)}
-        ${character(commit, '5', 'five', 5)}
-        ${character(commit, '6', 'six', 6)}
         ${equals(commit)}
+
+        ${operator(commit, '/', 'divide', raw('&divide;'))}
+        ${operator(commit, '*', 'times', raw('&times;'))}
+        ${operator(commit, '-', 'minus', raw('&minus;'))}
+        ${operator(commit, '+', 'plus', raw('&plus;'))}
+
+        ${character(commit, '0', 'zero', 0)}
         ${character(commit, '1', 'one', 1)}
         ${character(commit, '2', 'two', 2)}
         ${character(commit, '3', 'three', 3)}
-        ${character(commit, '0', 'zero', 0)}
+        ${character(commit, '4', 'four', 4)}
+        ${character(commit, '5', 'five', 5)}
+        ${character(commit, '6', 'six', 6)}
+        ${character(commit, '7', 'seven', 7)}
+        ${character(commit, '8', 'eight', 8)}
+        ${character(commit, '9', 'nine', 9)}
+
         ${character(commit, '.', 'decimal', '.')}
         ${sign(commit)}
       </form>
