@@ -1,19 +1,7 @@
 export const _start = `
-  @font-face {
-    font-display: swap;
-    font-family: 'PT Mono';
-    font-style: normal;
-    font-weight: 400;
-    src:
-      local('PT Mono'),
-      local('PTMono-Regular'),
-      url('/fonts/pt-mono-v7-latin-regular.woff2') format('woff2'),
-      url('/fonts/pt-mono-v7-latin-regular.woff') format('woff');
-  }
-
   * {
     box-sizing: border-box;
-    font: 24px/1.5 'PT Mono', monospace;
+    font: 24px/1.5 Consolas, monaco, monospace;
     margin: 0;
     padding: 0;
     max-width: 100%;
