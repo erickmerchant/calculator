@@ -1,4 +1,4 @@
-import {classes} from './out/styles.mjs'
+import {classes} from './css/styles.mjs'
 import {render, domUpdate, html, raw} from '@erickmerchant/framework'
 
 const target = document.querySelector('body')

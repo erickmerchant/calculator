@@ -9,7 +9,7 @@ const execaOptions = {shell: true, stdio: 'inherit', cwd: process.cwd()}
 command({
   name: 'start',
   async action() {
-    execa('css src/styles.mjs src/out/styles -wd', execaOptions)
+    execa('css src/styles.mjs src/css/styles -wd', execaOptions)
 
     execa('dev serve src', execaOptions)
   }
@@ -19,7 +19,7 @@ command({
   name: 'build',
   async action() {
     await Promise.all([
-      execa('css src/styles.mjs src/out/styles', execaOptions),
+      execa('css src/styles.mjs src/css/styles', execaOptions),
       execa('dev cache src dist', execaOptions)
     ])
   }
