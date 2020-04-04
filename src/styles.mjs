@@ -30,11 +30,11 @@ export const styles = {
     gap: 0.25em;
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
-      'output  output   output  output  output'
-      'seven   eight    nine    divide  clear'
-      'four    five     six     times   equals'
-      'one     two      three   minus   equals'
-      'zero    decimal  sign    plus    equals';
+      "output  output   output  output  output"
+      "seven   eight    nine    divide  clear"
+      "four    five     six     times   equals"
+      "one     two      three   minus   equals"
+      "zero    decimal  sign    plus    equals";
     border: 3px solid white;
     background: white;
     box-shadow: 3px 3px 9px #222;
