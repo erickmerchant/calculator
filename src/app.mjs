@@ -1,6 +1,16 @@
 import {classes} from './css/styles.mjs'
 import {render, domUpdate, html, raw} from '@erickmerchant/framework'
 
+const defaultState = {
+  output: null,
+  left: null,
+  operator: null,
+  right: null,
+  done: false
+}
+
+const state = Object.assign({}, defaultState)
+
 const target = document.querySelector('body')
 
 const update = domUpdate(target)
@@ -12,16 +22,6 @@ const button = (commit, options) => html`<button
     onclick=${() => {
       commit(options.onclick)
     }}>${options.text}</button>`
-
-const defaultState = {
-  output: null,
-  left: null,
-  operator: null,
-  right: null,
-  done: false
-}
-
-const state = Object.assign({}, defaultState)
 
 const clear = (commit) => button(
   commit,
