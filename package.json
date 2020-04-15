@@ -8,7 +8,7 @@
   "scripts": {
     "build": "node ./cli.js build",
     "start": "node ./cli.js start",
-    "pretest": "lint src/*",
+    "pretest": "lint '**/*.{js,mjs}'",
     "test": "exit 0"
   },
   "dependencies": {
