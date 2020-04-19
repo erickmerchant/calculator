@@ -67,12 +67,12 @@ export const styles = {
     background-color: var(--color);
   `,
   operator: (styles) => `
-    ${styles.button(styles)}
+    ${styles.button}
 
     --saturation: 60%;
   `,
   clear: (styles) => `
-    ${styles.button(styles)}
+    ${styles.button}
 
     --hue: 350;
     --saturation: 60%;
