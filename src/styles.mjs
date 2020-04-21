@@ -1,11 +1,11 @@
 export const _start = `
   * {
     box-sizing: border-box;
-    font: 24px/1.5 Consolas, monaco, monospace;
     margin: 0;
     padding: 0;
     max-width: 100%;
     border-radius: 3px;
+    font: 24px/1.5 Consolas, monaco, monospace;
   }
 
   html {
@@ -15,18 +15,14 @@ export const _start = `
 
 export const styles = {
   app: `
-    justify-content: center;
-    color: #222;
     display: flex;
+    justify-content: center;
     height: 100%;
+    color: #222;
     background: hsl(200, 5%, 50%);
   `,
   form: `
     display: grid;
-    margin: auto;
-    width: 20em;
-    height: 20em;
-    padding: 1em;
     gap: 0.25em;
     grid-template-columns: repeat(5, 1fr);
     grid-template-areas:
@@ -35,8 +31,12 @@ export const styles = {
       "four    five     six     times   equals"
       "one     two      three   minus   equals"
       "zero    decimal  sign    plus    equals";
-    border: 3px solid white;
+    width: 20em;
+    height: 20em;
+    margin: auto;
+    padding: 1em;
     background: white;
+    border: 3px solid white;
     box-shadow: 3px 3px 9px #222;
   `,
   element: `
@@ -51,20 +51,20 @@ export const styles = {
     ${styles.element}
 
     display: flex;
-    padding: 1em;
     justify-content: flex-end;
-    line-height: 1;
     height: 3em;
+    padding: 1em;
     color: var(--color);
+    line-height: 1;
 
     --grid-area: output;
   `,
   button: (styles) => `
     ${styles.element}
 
-    color: white;
     min-height: 3em;
     background-color: var(--color);
+    color: white;
   `,
   operator: (styles) => `
     ${styles.button}
