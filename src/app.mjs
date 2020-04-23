@@ -1,5 +1,5 @@
 import {classes} from './css/styles.mjs'
-import {render, domUpdate, html, raw} from '@erickmerchant/framework'
+import {render, domUpdate, html} from '@erickmerchant/framework'
 
 const defaultState = {
   output: null,
@@ -53,15 +53,15 @@ const equals = (commit) => button(
           state.left = left + right
           break
 
-        case '-':
+        case '−':
           state.left = left - right
           break
 
-        case '*':
+        case '×':
           state.left = left * right
           break
 
-        case '/':
+        case '÷':
           state.left = left / right
           break
       }
@@ -72,11 +72,11 @@ const equals = (commit) => button(
     },
     area: 'equals',
     classes: classes.operator,
-    text: raw('&equals;')
+    text: '='
   }
 )
 
-const operator = (commit, operator, area, text) => button(
+const operator = (commit, operator, area) => button(
   commit,
   {
     onclick(state) {
@@ -98,11 +98,11 @@ const operator = (commit, operator, area, text) => button(
     },
     classes: classes.operator,
     area,
-    text
+    text: operator === '.' ? '' : operator
   }
 )
 
-const character = (commit, character, area, text) => button(
+const character = (commit, character, area) => button(
   commit,
   {
     onclick(state) {
@@ -127,7 +127,7 @@ const character = (commit, character, area, text) => button(
       return state
     },
     area,
-    text
+    text: character
   }
 )
 
@@ -146,7 +146,7 @@ const sign = (commit) => button(
       return state
     },
     area: 'sign',
-    text: raw('&plusmn;')
+    text: '±'
   }
 )
 
@@ -180,23 +180,23 @@ render({
         ${clear(commit)}
         ${equals(commit)}
 
-        ${operator(commit, '/', 'divide', raw('&divide;'))}
-        ${operator(commit, '*', 'times', raw('&times;'))}
-        ${operator(commit, '-', 'minus', raw('&minus;'))}
-        ${operator(commit, '+', 'plus', raw('&plus;'))}
+        ${operator(commit, '÷', 'divide')}
+        ${operator(commit, '×', 'times')}
+        ${operator(commit, '−', 'minus')}
+        ${operator(commit, '+', 'plus')}
 
-        ${character(commit, '0', 'zero', 0)}
-        ${character(commit, '1', 'one', 1)}
-        ${character(commit, '2', 'two', 2)}
-        ${character(commit, '3', 'three', 3)}
-        ${character(commit, '4', 'four', 4)}
-        ${character(commit, '5', 'five', 5)}
-        ${character(commit, '6', 'six', 6)}
-        ${character(commit, '7', 'seven', 7)}
-        ${character(commit, '8', 'eight', 8)}
-        ${character(commit, '9', 'nine', 9)}
+        ${character(commit, '0', 'zero')}
+        ${character(commit, '1', 'one')}
+        ${character(commit, '2', 'two')}
+        ${character(commit, '3', 'three')}
+        ${character(commit, '4', 'four')}
+        ${character(commit, '5', 'five')}
+        ${character(commit, '6', 'six')}
+        ${character(commit, '7', 'seven')}
+        ${character(commit, '8', 'eight')}
+        ${character(commit, '9', 'nine')}
 
-        ${character(commit, '.', 'decimal', '.')}
+        ${character(commit, '.', 'decimal')}
         ${sign(commit)}
       </form>
     </body>`
