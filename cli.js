@@ -3,9 +3,6 @@ const {command, start} = require('sergeant')('cli.js')
 const execa = require('execa')
 const execaOptions = {shell: true, stdio: 'inherit', cwd: process.cwd()}
 
-// require('@erickmerchant/css')
-// require('@erickmerchant/dev-cli')
-
 command({
   name: 'start',
   async action() {
