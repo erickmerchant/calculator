@@ -46,108 +46,98 @@ const calc = (state) => {
   }
 }
 
-const clear = (commit) => button(
-  {
-    onclick() {
-      commit(Object.assign({}, defaultState))
-    },
-    classes: classes.clear,
-    area: 'clear',
-    text: 'AC'
-  }
-)
+const clear = (commit) => button({
+  onclick() {
+    commit(Object.assign({}, defaultState))
+  },
+  classes: classes.clear,
+  area: 'clear',
+  text: 'AC'
+})
 
-const equals = (commit) => button(
-  {
-    onclick() {
-      commit((state) => {
-        if (state.left == null || state.operator == null || state.right == null) {
-          return
-        }
+const equals = (commit) => button({
+  onclick() {
+    commit((state) => {
+      if (state.left == null || state.operator == null || state.right == null) {
+        return
+      }
 
+      calc(state)
+
+      state.done = true
+    })
+  },
+  area: 'equals',
+  classes: classes.operator,
+  text: '='
+})
+
+const operator = (commit, operator, area) => button({
+  onclick() {
+    commit((state) => {
+      if (state.left == null) {
+        return
+      }
+
+      if (state.output === 'right') {
         calc(state)
+      }
 
-        state.done = true
-      })
-    },
-    area: 'equals',
-    classes: classes.operator,
-    text: '='
-  }
-)
+      state.done = false
 
-const operator = (commit, operator, area) => button(
-  {
-    onclick() {
-      commit((state) => {
-        if (state.left == null) {
-          return
-        }
+      state.right = null
 
-        if (state.output === 'right') {
-          calc(state)
-        }
+      state.operator = operator
+    })
+  },
+  classes: classes.operator,
+  area,
+  text: operator === '.' ? '' : operator
+})
 
-        state.done = false
+const character = (commit, character, area) => button({
+  onclick() {
+    commit((state) => {
+      if (state.done) {
+        state = Object.assign({}, defaultState)
+      }
 
-        state.right = null
+      let target = 'right'
 
-        state.operator = operator
-      })
-    },
-    classes: classes.operator,
-    area,
-    text: operator === '.' ? '' : operator
-  }
-)
+      if (state.operator == null) {
+        target = 'left'
+      }
 
-const character = (commit, character, area) => button(
-  {
-    onclick() {
-      commit((state) => {
-        if (state.done) {
-          state = Object.assign({}, defaultState)
-        }
+      if (state[target] == null) {
+        state[target] = character === '.' ? '0.' : character
+      } else if (character !== '.' || !state[target].includes('.')) {
+        state[target] += character
+      }
 
-        let target = 'right'
+      state.output = target
 
-        if (state.operator == null) {
-          target = 'left'
-        }
+      return state
+    })
+  },
+  area,
+  text: character
+})
 
-        if (state[target] == null) {
-          state[target] = character === '.' ? '0.' : character
-        } else if (character !== '.' || !state[target].includes('.')) {
-          state[target] += character
-        }
+const sign = (commit) => button({
+  onclick() {
+    commit((state) => {
+      const target = state.output
 
-        state.output = target
+      if (state[target] != null) {
+        const number = Number(state[target])
 
-        return state
-      })
-    },
-    area,
-    text: character
-  }
-)
-
-const sign = (commit) => button(
-  {
-    onclick() {
-      commit((state) => {
-        const target = state.output
-
-        if (state[target] != null) {
-          const number = Number(state[target])
-
-          state[target] = number * -1
-        }
-      })
-    },
-    area: 'sign',
-    text: '±'
-  }
-)
+        state[target] = number * -1
+      }
+    })
+  },
+  area: 'sign',
+  text: '±'
+})
 
 const format = (val) => {
   if (typeof val === 'number') return val
