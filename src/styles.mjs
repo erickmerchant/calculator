@@ -65,6 +65,10 @@ export const styles = {
     min-height: 3em;
     background-color: var(--color);
     color: white;
+
+    :focus, :active, :hover {
+      filter: saturate(1.5);
+    }
   `,
   operator: (styles) => `
     ${styles.button}

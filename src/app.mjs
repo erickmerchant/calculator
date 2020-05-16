@@ -40,7 +40,7 @@ const equals = (commit) => button(
   {
     onclick(state) {
       if (state.left == null || state.operator == null || state.right == null) {
-        return state
+        return
       }
 
       state.output = 'left'
@@ -67,8 +67,6 @@ const equals = (commit) => button(
       }
 
       state.done = true
-
-      return state
     },
     area: 'equals',
     classes: classes.operator,
@@ -81,7 +79,7 @@ const operator = (commit, operator, area) => button(
   {
     onclick(state) {
       if (state.left == null) {
-        return state
+        return
       }
 
       if (state.output === 'right') {
@@ -93,8 +91,6 @@ const operator = (commit, operator, area) => button(
       state.operator = operator
 
       state.done = false
-
-      return state
     },
     classes: classes.operator,
     area,
@@ -123,8 +119,6 @@ const character = (commit, character, area) => button(
       }
 
       state.output = target
-
-      return state
     },
     area,
     text: character
@@ -142,8 +136,6 @@ const sign = (commit) => button(
 
         state[target] = number * -1
       }
-
-      return state
     },
     area: 'sign',
     text: '±'
