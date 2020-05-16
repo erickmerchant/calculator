@@ -66,8 +66,8 @@ export const styles = {
     background-color: var(--color);
     color: white;
 
-    :focus, :active, :hover {
-      filter: saturate(1.5);
+    :focus, :active {
+      filter: brightness(1.1);
     }
   `,
   operator: (styles) => `

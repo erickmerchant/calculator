@@ -15,19 +15,41 @@ const target = document.querySelector('body')
 
 const update = domUpdate(target)
 
-const button = (commit, options) => html`<button
+const button = (options) => html`<button
     type="button"
     class=${options.classes || classes.button}
     style=${`--grid-area: ${options.area}`}
-    onclick=${() => {
-      commit(options.onclick)
-    }}>${options.text}</button>`
+    onclick=${options.onclick}>${options.text}</button>`
+
+const calc = (state) => {
+  state.output = 'left'
+
+  const left = Number(state.left)
+  const right = Number(state.right)
+
+  switch (state.operator) {
+    case '+':
+      state.left = left + right
+      break
+
+    case '−':
+      state.left = left - right
+      break
+
+    case '×':
+      state.left = left * right
+      break
+
+    case '÷':
+      state.left = left / right
+      break
+  }
+}
 
 const clear = (commit) => button(
-  commit,
   {
     onclick() {
-      return Object.assign({}, defaultState)
+      commit(Object.assign({}, defaultState))
     },
     classes: classes.clear,
     area: 'clear',
@@ -36,37 +58,17 @@ const clear = (commit) => button(
 )
 
 const equals = (commit) => button(
-  commit,
   {
-    onclick(state) {
-      if (state.left == null || state.operator == null || state.right == null) {
-        return
-      }
+    onclick() {
+      commit((state) => {
+        if (state.left == null || state.operator == null || state.right == null) {
+          return
+        }
 
-      state.output = 'left'
+        calc(state)
 
-      const left = Number(state.left)
-      const right = Number(state.right)
-
-      switch (state.operator) {
-        case '+':
-          state.left = left + right
-          break
-
-        case '−':
-          state.left = left - right
-          break
-
-        case '×':
-          state.left = left * right
-          break
-
-        case '÷':
-          state.left = left / right
-          break
-      }
-
-      state.done = true
+        state.done = true
+      })
     },
     area: 'equals',
     classes: classes.operator,
@@ -75,22 +77,23 @@ const equals = (commit) => button(
 )
 
 const operator = (commit, operator, area) => button(
-  commit,
   {
-    onclick(state) {
-      if (state.left == null) {
-        return
-      }
+    onclick() {
+      commit((state) => {
+        if (state.left == null) {
+          return
+        }
 
-      if (state.output === 'right') {
-        equals(state)
-      }
+        if (state.output === 'right') {
+          calc(state)
+        }
 
-      state.right = null
+        state.done = false
 
-      state.operator = operator
+        state.right = null
 
-      state.done = false
+        state.operator = operator
+      })
     },
     classes: classes.operator,
     area,
@@ -99,26 +102,29 @@ const operator = (commit, operator, area) => button(
 )
 
 const character = (commit, character, area) => button(
-  commit,
   {
-    onclick(state) {
-      if (state.done) {
-        state = clear()
-      }
+    onclick() {
+      commit((state) => {
+        if (state.done) {
+          state = Object.assign({}, defaultState)
+        }
 
-      let target = 'right'
+        let target = 'right'
 
-      if (state.operator == null) {
-        target = 'left'
-      }
+        if (state.operator == null) {
+          target = 'left'
+        }
 
-      if (state[target] == null) {
-        state[target] = character === '.' ? '0.' : character
-      } else if (character !== '.' || !state[target].includes('.')) {
-        state[target] += character
-      }
+        if (state[target] == null) {
+          state[target] = character === '.' ? '0.' : character
+        } else if (character !== '.' || !state[target].includes('.')) {
+          state[target] += character
+        }
 
-      state.output = target
+        state.output = target
+
+        return state
+      })
     },
     area,
     text: character
@@ -126,16 +132,17 @@ const character = (commit, character, area) => button(
 )
 
 const sign = (commit) => button(
-  commit,
   {
-    onclick(state) {
-      const target = state.output
+    onclick() {
+      commit((state) => {
+        const target = state.output
 
-      if (state[target] != null) {
-        const number = Number(state[target])
+        if (state[target] != null) {
+          const number = Number(state[target])
 
-        state[target] = number * -1
-      }
+          state[target] = number * -1
+        }
+      })
     },
     area: 'sign',
     text: '±'
@@ -169,27 +176,29 @@ render({
     <body class=${classes.app}>
       <form class=${classes.form}>
         <output class=${classes.output}>${state.output ? format(state[state.output]) : '0'}</output>
-        ${clear(commit)}
-        ${equals(commit)}
 
-        ${operator(commit, '÷', 'divide')}
-        ${operator(commit, '×', 'times')}
-        ${operator(commit, '−', 'minus')}
-        ${operator(commit, '+', 'plus')}
-
-        ${character(commit, '0', 'zero')}
-        ${character(commit, '1', 'one')}
-        ${character(commit, '2', 'two')}
-        ${character(commit, '3', 'three')}
-        ${character(commit, '4', 'four')}
-        ${character(commit, '5', 'five')}
-        ${character(commit, '6', 'six')}
         ${character(commit, '7', 'seven')}
         ${character(commit, '8', 'eight')}
         ${character(commit, '9', 'nine')}
+        ${operator(commit, '÷', 'divide')}
+        ${clear(commit)}
 
+        ${character(commit, '4', 'four')}
+        ${character(commit, '5', 'five')}
+        ${character(commit, '6', 'six')}
+        ${operator(commit, '×', 'times')}
+        ${equals(commit)}
+
+        ${character(commit, '1', 'one')}
+        ${character(commit, '2', 'two')}
+        ${character(commit, '3', 'three')}
+        ${operator(commit, '−', 'minus')}
+
+        ${character(commit, '0', 'zero')}
         ${character(commit, '.', 'decimal')}
         ${sign(commit)}
+        ${operator(commit, '+', 'plus')}
+
       </form>
     </body>`
   }
