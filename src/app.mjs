@@ -42,7 +42,7 @@ const calc = (state) => {
   }
 }
 
-const clear = () => button({
+const clearButton = button({
   onclick() {
     app.commit(Object.assign({}, defaultState))
   },
@@ -51,7 +51,7 @@ const clear = () => button({
   text: 'AC'
 })
 
-const equals = () => button({
+const equalsButton = button({
   onclick() {
     app.commit((state) => {
       if (state.left == null || state.operator == null || state.right == null) {
@@ -68,7 +68,7 @@ const equals = () => button({
   text: '='
 })
 
-const operator = (operator, area) => button({
+const operatorButton = (operator, area) => button({
   onclick() {
     app.commit((state) => {
       if (state.left == null) {
@@ -91,7 +91,7 @@ const operator = (operator, area) => button({
   text: operator === '.' ? '' : operator
 })
 
-const character = (character, area) => button({
+const characterButton = (character, area) => button({
   onclick() {
     app.commit((state) => {
       if (state.done) {
@@ -119,7 +119,7 @@ const character = (character, area) => button({
   text: character
 })
 
-const sign = () => button({
+const signButton = button({
   onclick() {
     app.commit((state) => {
       const target = state.output
@@ -161,27 +161,27 @@ const view = createDomView(target, (state) => html`
     <form class=${classes.form}>
       <output class=${classes.output}>${state.output ? format(state[state.output]) : '0'}</output>
 
-      ${character('7', 'seven')}
-      ${character('8', 'eight')}
-      ${character('9', 'nine')}
-      ${operator('÷', 'divide')}
-      ${clear()}
+      ${characterButton('7', 'seven')}
+      ${characterButton('8', 'eight')}
+      ${characterButton('9', 'nine')}
+      ${operatorButton('÷', 'divide')}
+      ${clearButton}
 
-      ${character('4', 'four')}
-      ${character('5', 'five')}
-      ${character('6', 'six')}
-      ${operator('×', 'times')}
-      ${equals()}
+      ${characterButton('4', 'four')}
+      ${characterButton('5', 'five')}
+      ${characterButton('6', 'six')}
+      ${operatorButton('×', 'times')}
+      ${equalsButton}
 
-      ${character('1', 'one')}
-      ${character('2', 'two')}
-      ${character('3', 'three')}
-      ${operator('−', 'minus')}
+      ${characterButton('1', 'one')}
+      ${characterButton('2', 'two')}
+      ${characterButton('3', 'three')}
+      ${operatorButton('−', 'minus')}
 
-      ${character('0', 'zero')}
-      ${character('.', 'decimal')}
-      ${sign()}
-      ${operator('+', 'plus')}
+      ${characterButton('0', 'zero')}
+      ${characterButton('.', 'decimal')}
+      ${signButton}
+      ${operatorButton('+', 'plus')}
 
     </form>
   </body>`)
