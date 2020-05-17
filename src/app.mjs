@@ -1,5 +1,5 @@
 import {classes} from './css/styles.mjs'
-import {render, domUpdate, html} from '@erickmerchant/framework'
+import {createDomView, createApp, html} from '@erickmerchant/framework'
 
 const defaultState = {
   output: null,
@@ -9,11 +9,7 @@ const defaultState = {
   done: false
 }
 
-const state = Object.assign({}, defaultState)
-
-const target = document.querySelector('body')
-
-const update = domUpdate(target)
+const app = createApp(Object.assign({}, defaultState))
 
 const button = (options) => html`<button
     type="button"
@@ -46,18 +42,18 @@ const calc = (state) => {
   }
 }
 
-const clear = (commit) => button({
+const clear = () => button({
   onclick() {
-    commit(Object.assign({}, defaultState))
+    app.commit(Object.assign({}, defaultState))
   },
   classes: classes.clear,
   area: 'clear',
   text: 'AC'
 })
 
-const equals = (commit) => button({
+const equals = () => button({
   onclick() {
-    commit((state) => {
+    app.commit((state) => {
       if (state.left == null || state.operator == null || state.right == null) {
         return
       }
@@ -72,9 +68,9 @@ const equals = (commit) => button({
   text: '='
 })
 
-const operator = (commit, operator, area) => button({
+const operator = (operator, area) => button({
   onclick() {
-    commit((state) => {
+    app.commit((state) => {
       if (state.left == null) {
         return
       }
@@ -95,9 +91,9 @@ const operator = (commit, operator, area) => button({
   text: operator === '.' ? '' : operator
 })
 
-const character = (commit, character, area) => button({
+const character = (character, area) => button({
   onclick() {
-    commit((state) => {
+    app.commit((state) => {
       if (state.done) {
         state = Object.assign({}, defaultState)
       }
@@ -123,9 +119,9 @@ const character = (commit, character, area) => button({
   text: character
 })
 
-const sign = (commit) => button({
+const sign = () => button({
   onclick() {
-    commit((state) => {
+    app.commit((state) => {
       const target = state.output
 
       if (state[target] != null) {
@@ -158,38 +154,36 @@ const format = (val) => {
   return number.toFixed(1)
 }
 
-render({
-  state,
-  update,
-  component({state, commit}) {
-    return html`
-    <body class=${classes.app}>
-      <form class=${classes.form}>
-        <output class=${classes.output}>${state.output ? format(state[state.output]) : '0'}</output>
+const target = document.querySelector('body')
 
-        ${character(commit, '7', 'seven')}
-        ${character(commit, '8', 'eight')}
-        ${character(commit, '9', 'nine')}
-        ${operator(commit, '÷', 'divide')}
-        ${clear(commit)}
+const view = createDomView(target, (state) => html`
+  <body class=${classes.app}>
+    <form class=${classes.form}>
+      <output class=${classes.output}>${state.output ? format(state[state.output]) : '0'}</output>
 
-        ${character(commit, '4', 'four')}
-        ${character(commit, '5', 'five')}
-        ${character(commit, '6', 'six')}
-        ${operator(commit, '×', 'times')}
-        ${equals(commit)}
+      ${character('7', 'seven')}
+      ${character('8', 'eight')}
+      ${character('9', 'nine')}
+      ${operator('÷', 'divide')}
+      ${clear()}
 
-        ${character(commit, '1', 'one')}
-        ${character(commit, '2', 'two')}
-        ${character(commit, '3', 'three')}
-        ${operator(commit, '−', 'minus')}
+      ${character('4', 'four')}
+      ${character('5', 'five')}
+      ${character('6', 'six')}
+      ${operator('×', 'times')}
+      ${equals()}
 
-        ${character(commit, '0', 'zero')}
-        ${character(commit, '.', 'decimal')}
-        ${sign(commit)}
-        ${operator(commit, '+', 'plus')}
+      ${character('1', 'one')}
+      ${character('2', 'two')}
+      ${character('3', 'three')}
+      ${operator('−', 'minus')}
 
-      </form>
-    </body>`
-  }
-})
+      ${character('0', 'zero')}
+      ${character('.', 'decimal')}
+      ${sign()}
+      ${operator('+', 'plus')}
+
+    </form>
+  </body>`)
+
+app.render(view)
