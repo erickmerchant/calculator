@@ -47,94 +47,84 @@ const calc = (state) => {
 }
 
 const clearButton = button({
-  onclick() {
-    app.commit(Object.assign({}, defaultState))
-  },
+  onclick: () => app.commit(Object.assign({}, defaultState)),
   classes: classes.clear,
   area: 'clear',
   text: 'AC'
 })
 
 const equalsButton = button({
-  onclick() {
-    app.commit((state) => {
-      if (state.left == null || state.operator == null || state.right == null) {
-        return
-      }
+  onclick: () => app.commit((state) => {
+    if (state.left == null || state.operator == null || state.right == null) {
+      return
+    }
 
-      calc(state)
+    calc(state)
 
-      state.done = true
-    })
-  },
+    state.done = true
+  }),
   area: 'equals',
   classes: classes.operator,
   text: '='
 })
 
 const operatorButton = (operator, area) => button({
-  onclick() {
-    app.commit((state) => {
-      if (state.left == null) {
-        return
-      }
+  onclick: () => app.commit((state) => {
+    if (state.left == null) {
+      return
+    }
 
-      if (state.output === 'right') {
-        calc(state)
-      }
+    if (state.output === 'right') {
+      calc(state)
+    }
 
-      state.done = false
+    state.done = false
 
-      state.right = null
+    state.right = null
 
-      state.operator = operator
-    })
-  },
+    state.operator = operator
+  }),
   classes: classes.operator,
   area,
   text: operator === '.' ? '' : operator
 })
 
 const characterButton = (character, area) => button({
-  onclick() {
-    app.commit((state) => {
-      if (state.done) {
-        state = Object.assign({}, defaultState)
-      }
+  onclick: () => app.commit((state) => {
+    if (state.done) {
+      state = Object.assign({}, defaultState)
+    }
 
-      let target = 'right'
+    let target = 'right'
 
-      if (state.operator == null) {
-        target = 'left'
-      }
+    if (state.operator == null) {
+      target = 'left'
+    }
 
-      if (state[target] == null) {
-        state[target] = character === '.' ? '0.' : character
-      } else if (character !== '.' || !state[target].includes('.')) {
-        state[target] += character
-      }
+    if (state[target] == null) {
+      state[target] = character === '.' ? '0.' : character
+    } else if (character !== '.' || !state[target].includes('.')) {
+      state[target] += character
+    }
 
-      state.output = target
+    state.output = target
 
-      return state
-    })
-  },
+    return state
+  }),
   area,
   text: character
 })
 
 const signButton = button({
-  onclick() {
-    app.commit((state) => {
-      const target = state.output
+  onclick: () => app.commit((state) => {
+    const target = state.output
 
-      if (state[target] != null) {
-        const number = Number(state[target])
+    if (state[target] != null) {
+      const number = Number(state[target])
 
-        state[target] = number * -1
-      }
-    })
-  },
+      state[target] = number * -1
+    }
+  }),
   area: 'sign',
   text: '±'
 })
