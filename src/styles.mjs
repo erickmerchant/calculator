@@ -25,12 +25,7 @@ export const styles = {
     display: grid;
     gap: 0.25em;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-areas:
-      "output  output   output  output  output"
-      "seven   eight    nine    divide  clear"
-      "four    five     six     times   equals"
-      "one     two      three   minus   equals"
-      "zero    decimal  sign    plus    equals";
+    grid-auto-rows: repeat(auto, 1fr);
     width: 20em;
     height: 20em;
     margin: auto;
@@ -40,7 +35,6 @@ export const styles = {
     box-shadow: 3px 3px 9px #222;
   `,
   element: `
-    grid-area: var(--grid-area);
     border: 2px solid var(--color);
 
     --color: hsl(var(--hue), var(--saturation), 50%);
@@ -51,13 +45,13 @@ export const styles = {
     ${styles.element}
 
     display: flex;
+    grid-column: 1 / span 5;
     justify-content: flex-end;
     height: 3em;
     padding: 1em;
     color: var(--color);
     line-height: 1;
 
-    --grid-area: output;
   `,
   button: (styles) => `
     ${styles.element}
@@ -80,5 +74,11 @@ export const styles = {
 
     --hue: 350;
     --saturation: 60%;
+  `,
+  equals: (styles) => `
+    ${styles.button}
+
+    grid-row: 3 / span 3;
+    grid-column: 5;
   `
 }

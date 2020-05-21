@@ -15,7 +15,6 @@ const button = (options) => html`
   <button
     type="button"
     class=${options.classes || classes.button}
-    style=${`--grid-area: ${options.area}`}
     onclick=${options.onclick}>
     ${options.text}
   </button>
@@ -49,7 +48,6 @@ const calc = (state) => {
 const clearButton = button({
   onclick: () => app.commit(Object.assign({}, defaultState)),
   classes: classes.clear,
-  area: 'clear',
   text: 'AC'
 })
 
@@ -63,12 +61,11 @@ const equalsButton = button({
 
     state.done = true
   }),
-  area: 'equals',
-  classes: classes.operator,
+  classes: classes.equals,
   text: '='
 })
 
-const operatorButton = (operator, area) => button({
+const operatorButton = (operator) => button({
   onclick: () => app.commit((state) => {
     if (state.left == null) {
       return
@@ -85,11 +82,10 @@ const operatorButton = (operator, area) => button({
     state.operator = operator
   }),
   classes: classes.operator,
-  area,
   text: operator === '.' ? '' : operator
 })
 
-const characterButton = (character, area) => button({
+const characterButton = (character) => button({
   onclick: () => app.commit((state) => {
     if (state.done) {
       state = Object.assign({}, defaultState)
@@ -111,7 +107,6 @@ const characterButton = (character, area) => button({
 
     return state
   }),
-  area,
   text: character
 })
 
@@ -125,7 +120,6 @@ const signButton = button({
       state[target] = number * -1
     }
   }),
-  area: 'sign',
   text: '±'
 })
 
