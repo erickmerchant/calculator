@@ -11,11 +11,15 @@ const defaultState = {
 
 const app = createApp(Object.assign({}, defaultState))
 
-const button = (options) => html`<button
+const button = (options) => html`
+  <button
     type="button"
     class=${options.classes || classes.button}
     style=${`--grid-area: ${options.area}`}
-    onclick=${options.onclick}>${options.text}</button>`
+    onclick=${options.onclick}>
+    ${options.text}
+  </button>
+`
 
 const calc = (state) => {
   state.output = 'left'
@@ -184,6 +188,7 @@ const view = createDomView(target, (state) => html`
       ${operatorButton('+', 'plus')}
 
     </form>
-  </body>`)
+  </body>
+`)
 
 app.render(view)
