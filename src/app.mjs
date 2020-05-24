@@ -15,7 +15,8 @@ const button = (options) => html`
   <button
     type="button"
     class=${options.classes || classes.button}
-    onclick=${options.onclick}>
+    onclick=${options.onclick}
+  >
     ${options.text}
   </button>
 `
@@ -52,74 +53,80 @@ const clearButton = button({
 })
 
 const equalsButton = button({
-  onclick: () => app.commit((state) => {
-    if (state.left == null || state.operator == null || state.right == null) {
-      return
-    }
+  onclick: () =>
+    app.commit((state) => {
+      if (state.left == null || state.operator == null || state.right == null) {
+        return
+      }
 
-    calc(state)
+      calc(state)
 
-    state.done = true
-  }),
+      state.done = true
+    }),
   classes: classes.equals,
   text: '='
 })
 
-const operatorButton = (operator) => button({
-  onclick: () => app.commit((state) => {
-    if (state.left == null) {
-      return
-    }
+const operatorButton = (operator) =>
+  button({
+    onclick: () =>
+      app.commit((state) => {
+        if (state.left == null) {
+          return
+        }
 
-    if (state.output === 'right') {
-      calc(state)
-    }
+        if (state.output === 'right') {
+          calc(state)
+        }
 
-    state.done = false
+        state.done = false
 
-    state.right = null
+        state.right = null
 
-    state.operator = operator
-  }),
-  classes: classes.operator,
-  text: operator === '.' ? '' : operator
-})
+        state.operator = operator
+      }),
+    classes: classes.operator,
+    text: operator === '.' ? '' : operator
+  })
 
-const characterButton = (character) => button({
-  onclick: () => app.commit((state) => {
-    if (state.done) {
-      state = Object.assign({}, defaultState)
-    }
+const characterButton = (character) =>
+  button({
+    onclick: () =>
+      app.commit((state) => {
+        if (state.done) {
+          state = Object.assign({}, defaultState)
+        }
 
-    let target = 'right'
+        let target = 'right'
 
-    if (state.operator == null) {
-      target = 'left'
-    }
+        if (state.operator == null) {
+          target = 'left'
+        }
 
-    if (state[target] == null) {
-      state[target] = character === '.' ? '0.' : character
-    } else if (character !== '.' || !state[target].includes('.')) {
-      state[target] += character
-    }
+        if (state[target] == null) {
+          state[target] = character === '.' ? '0.' : character
+        } else if (character !== '.' || !state[target].includes('.')) {
+          state[target] += character
+        }
 
-    state.output = target
+        state.output = target
 
-    return state
-  }),
-  text: character
-})
+        return state
+      }),
+    text: character
+  })
 
 const signButton = button({
-  onclick: () => app.commit((state) => {
-    const target = state.output
+  onclick: () =>
+    app.commit((state) => {
+      const target = state.output
 
-    if (state[target] != null) {
-      const number = Number(state[target])
+      if (state[target] != null) {
+        const number = Number(state[target])
 
-      state[target] = number * -1
-    }
-  }),
+        state[target] = number * -1
+      }
+    }),
   text: '±'
 })
 
@@ -144,35 +151,27 @@ const format = (val) => {
 
 const target = document.querySelector('body')
 
-const view = createDomView(target, (state) => html`
-  <body class=${classes.app}>
-    <form class=${classes.form}>
-      <output class=${classes.output}>${state.output ? format(state[state.output]) : '0'}</output>
+const view = createDomView(
+  target,
+  (state) => html`
+    <body class=${classes.app}>
+      <form class=${classes.form}>
+        <output class=${classes.output}>
+          ${state.output ? format(state[state.output]) : '0'}
+        </output>
 
-      ${characterButton('7', 'seven')}
-      ${characterButton('8', 'eight')}
-      ${characterButton('9', 'nine')}
-      ${operatorButton('÷', 'divide')}
-      ${clearButton}
-
-      ${characterButton('4', 'four')}
-      ${characterButton('5', 'five')}
-      ${characterButton('6', 'six')}
-      ${operatorButton('×', 'times')}
-      ${equalsButton}
-
-      ${characterButton('1', 'one')}
-      ${characterButton('2', 'two')}
-      ${characterButton('3', 'three')}
-      ${operatorButton('−', 'minus')}
-
-      ${characterButton('0', 'zero')}
-      ${characterButton('.', 'decimal')}
-      ${signButton}
-      ${operatorButton('+', 'plus')}
-
-    </form>
-  </body>
-`)
+        ${characterButton('7', 'seven')} ${characterButton('8', 'eight')}
+        ${characterButton('9', 'nine')} ${operatorButton('÷', 'divide')}
+        ${clearButton} ${characterButton('4', 'four')}
+        ${characterButton('5', 'five')} ${characterButton('6', 'six')}
+        ${operatorButton('×', 'times')} ${equalsButton}
+        ${characterButton('1', 'one')} ${characterButton('2', 'two')}
+        ${characterButton('3', 'three')} ${operatorButton('−', 'minus')}
+        ${characterButton('0', 'zero')} ${characterButton('.', 'decimal')}
+        ${signButton} ${operatorButton('+', 'plus')}
+      </form>
+    </body>
+  `
+)
 
 app.render(view)
