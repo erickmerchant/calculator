@@ -160,15 +160,26 @@ const view = createDomView(
           ${state.output ? format(state[state.output]) : '0'}
         </output>
 
-        ${characterButton('7', 'seven')} ${characterButton('8', 'eight')}
-        ${characterButton('9', 'nine')} ${operatorButton('÷', 'divide')}
-        ${clearButton} ${characterButton('4', 'four')}
-        ${characterButton('5', 'five')} ${characterButton('6', 'six')}
-        ${operatorButton('×', 'times')} ${equalsButton}
-        ${characterButton('1', 'one')} ${characterButton('2', 'two')}
-        ${characterButton('3', 'three')} ${operatorButton('−', 'minus')}
-        ${characterButton('0', 'zero')} ${characterButton('.', 'decimal')}
-        ${signButton} ${operatorButton('+', 'plus')}
+        ${[
+          characterButton('7', 'seven'),
+          characterButton('8', 'eight'),
+          characterButton('9', 'nine'),
+          operatorButton('÷', 'divide'),
+          clearButton,
+          characterButton('4', 'four'),
+          characterButton('5', 'five'),
+          characterButton('6', 'six'),
+          operatorButton('×', 'times'),
+          equalsButton,
+          characterButton('1', 'one'),
+          characterButton('2', 'two'),
+          characterButton('3', 'three'),
+          operatorButton('−', 'minus'),
+          characterButton('0', 'zero'),
+          characterButton('.', 'decimal'),
+          signButton,
+          operatorButton('+', 'plus')
+        ]}
       </form>
     </body>
   `
