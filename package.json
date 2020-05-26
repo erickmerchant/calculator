@@ -8,7 +8,7 @@
   "scripts": {
     "build": "node ./cli.js build",
     "start": "node ./cli.js start",
-    "test": "eslint cli.js 'src/**/*.mjs'"
+    "test": "eslint cli.js 'src/*.mjs'"
   },
   "dependencies": {
     "@erickmerchant/css": "^22.2.2",
@@ -29,10 +29,7 @@
     "node": ">=14.2"
   },
   "eslintConfig": {
-    "extends": "@erickmerchant/eslint-config",
-    "ignorePatterns": [
-      "**/css/*"
-    ]
+    "extends": "@erickmerchant/eslint-config"
   },
   "prettier": "@erickmerchant/prettier-config"
 }
