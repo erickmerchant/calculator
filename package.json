@@ -8,7 +8,8 @@
   "scripts": {
     "build": "node ./cli.js build",
     "start": "node ./cli.js start",
-    "test": "eslint cli.js 'src/*.mjs'"
+    "lint": "eslint cli.js 'src/*.mjs'",
+    "test": "npm run lint"
   },
   "dependencies": {
     "@erickmerchant/css": "^22.2.2",
