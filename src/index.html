@@ -11,7 +11,21 @@
     />
     <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
     <title>Calculator</title>
-    <script src="/app.mjs" type="module"></script>
+    <script type="module">
+      import {createDomView, createApp} from '@erickmerchant/framework'
+      import {classes} from '/css/styles.mjs'
+      import {createComponent, defaultState} from '/app.mjs'
+
+      const app = createApp(Object.assign({}, defaultState))
+
+      const target = document.querySelector('body')
+
+      const component = createComponent(app, classes)
+
+      const view = createDomView(target, component)
+
+      app.render(view)
+    </script>
   </head>
   <body></body>
 </html>

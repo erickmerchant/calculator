@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      href="/css/styles.css"
+      rel="stylesheet"
+      type="text/css"
+      media="print"
+      onload="this.media = 'all'"
+    />
+    <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
+    <title>Calculator</title>
+    <script type="module">
+      import {createDomView, createApp} from '@erickmerchant/framework'
+
+      const app = createApp()
+
+      const target = document.querySelector('body')
+
+      const start = async (query = '') => {
+        const {classes} = await import(`/css/styles.mjs${query}`)
+        const {createComponent, defaultState} = await import(`/app.mjs${query}`)
+
+        app.commit((state = Object.assign({}, defaultState)) => state)
+
+        const component = createComponent(app, classes)
+
+        const view = createDomView(target, component)
+
+        app.render(view)
+      }
+
+      start()
+
+      const changes = new EventSource('/__changes')
+
+      changes.onmessage = (e) => {
+        const changes = JSON.parse(e.data)
+        const query = `?${Date.now()}`
+
+        if (changes.file === 'css/styles.css') {
+          document.querySelector('[rel="stylesheet"]').href = `/css/styles.css${query}`
+        } else if (['app.mjs', 'css/styles.mjs'].includes(changes.file)) {
+          start(query)
+        }
+      }
+    </script>
+  </head>
+  <body></body>
+</html>

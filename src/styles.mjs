@@ -16,16 +16,14 @@ export const _start = `
 export const styles = {
   app: `
     display: flex;
-    justify-content: center;
     height: 100%;
-    color: #222;
     background: hsl(200, 5%, 50%);
   `,
   form: `
     display: grid;
     gap: 0.25em;
     grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: repeat(auto, 1fr);
+    grid-auto-rows: 1fr;
     width: 20em;
     height: 20em;
     margin: auto;

@@ -1,25 +1,4 @@
-import {classes} from './css/styles.mjs'
-import {createDomView, createApp, html} from '@erickmerchant/framework'
-
-const defaultState = {
-  output: null,
-  left: null,
-  operator: null,
-  right: null,
-  done: false
-}
-
-const app = createApp(Object.assign({}, defaultState))
-
-const button = (options) => html`
-  <button
-    type="button"
-    class=${options.classes || classes.button}
-    onclick=${options.onclick}
-  >
-    ${options.text}
-  </button>
-`
+import {html} from '@erickmerchant/framework'
 
 const calc = (state) => {
   state.output = 'left'
@@ -46,90 +25,6 @@ const calc = (state) => {
   }
 }
 
-const clearButton = button({
-  onclick: () => app.commit(Object.assign({}, defaultState)),
-  classes: classes.clear,
-  text: 'AC'
-})
-
-const equalsButton = button({
-  onclick: () =>
-    app.commit((state) => {
-      if (state.left == null || state.operator == null || state.right == null) {
-        return
-      }
-
-      calc(state)
-
-      state.done = true
-    }),
-  classes: classes.equals,
-  text: '='
-})
-
-const operatorButton = (operator) =>
-  button({
-    onclick: () =>
-      app.commit((state) => {
-        if (state.left == null) {
-          return
-        }
-
-        if (state.output === 'right') {
-          calc(state)
-        }
-
-        state.done = false
-
-        state.right = null
-
-        state.operator = operator
-      }),
-    classes: classes.operator,
-    text: operator === '.' ? '' : operator
-  })
-
-const characterButton = (character) =>
-  button({
-    onclick: () =>
-      app.commit((state) => {
-        if (state.done) {
-          state = Object.assign({}, defaultState)
-        }
-
-        let target = 'right'
-
-        if (state.operator == null) {
-          target = 'left'
-        }
-
-        if (state[target] == null) {
-          state[target] = character === '.' ? '0.' : character
-        } else if (character !== '.' || !state[target].includes('.')) {
-          state[target] += character
-        }
-
-        state.output = target
-
-        return state
-      }),
-    text: character
-  })
-
-const signButton = button({
-  onclick: () =>
-    app.commit((state) => {
-      const target = state.output
-
-      if (state[target] != null) {
-        const number = Number(state[target])
-
-        state[target] = number * -1
-      }
-    }),
-  text: '±'
-})
-
 const format = (val) => {
   if (typeof val === 'number') return val
 
@@ -149,11 +44,114 @@ const format = (val) => {
   return number.toFixed(1)
 }
 
-const target = document.querySelector('body')
+export const defaultState = {
+  output: null,
+  left: null,
+  operator: null,
+  right: null,
+  done: false
+}
 
-const view = createDomView(
-  target,
-  (state) => html`
+export const createComponent = (app, classes) => {
+  const button = (options) => html`
+    <button
+      type="button"
+      class=${options.classes || classes.button}
+      onclick=${options.onclick}
+    >
+      ${options.text}
+    </button>
+  `
+
+  const clearButton = button({
+    onclick: () => app.commit(Object.assign({}, defaultState)),
+    classes: classes.clear,
+    text: 'AC'
+  })
+
+  const equalsButton = button({
+    onclick: () =>
+      app.commit((state) => {
+        if (
+          state.left == null ||
+          state.operator == null ||
+          state.right == null
+        ) {
+          return
+        }
+
+        calc(state)
+
+        state.done = true
+      }),
+    classes: classes.equals,
+    text: '='
+  })
+
+  const operatorButton = (operator) =>
+    button({
+      onclick: () =>
+        app.commit((state) => {
+          if (state.left == null) {
+            return
+          }
+
+          if (state.output === 'right') {
+            calc(state)
+          }
+
+          state.done = false
+
+          state.right = null
+
+          state.operator = operator
+        }),
+      classes: classes.operator,
+      text: operator === '.' ? '' : operator
+    })
+
+  const characterButton = (character) =>
+    button({
+      onclick: () =>
+        app.commit((state) => {
+          if (state.done) {
+            state = Object.assign({}, defaultState)
+          }
+
+          let target = 'right'
+
+          if (state.operator == null) {
+            target = 'left'
+          }
+
+          if (state[target] == null) {
+            state[target] = character === '.' ? '0.' : character
+          } else if (character !== '.' || !state[target].includes('.')) {
+            state[target] += character
+          }
+
+          state.output = target
+
+          return state
+        }),
+      text: character
+    })
+
+  const signButton = button({
+    onclick: () =>
+      app.commit((state) => {
+        const target = state.output
+
+        if (state[target] != null) {
+          const number = Number(state[target])
+
+          state[target] = number * -1
+        }
+      }),
+    text: '±'
+  })
+
+  return (state) => html`
     <body class=${classes.app}>
       <form class=${classes.form}>
         <output class=${classes.output}>
@@ -161,28 +159,26 @@ const view = createDomView(
         </output>
 
         ${[
-          characterButton('7', 'seven'),
-          characterButton('8', 'eight'),
-          characterButton('9', 'nine'),
-          operatorButton('÷', 'divide'),
+          characterButton('7'),
+          characterButton('8'),
+          characterButton('9'),
+          operatorButton('÷'),
           clearButton,
-          characterButton('4', 'four'),
-          characterButton('5', 'five'),
-          characterButton('6', 'six'),
-          operatorButton('×', 'times'),
+          characterButton('4'),
+          characterButton('5'),
+          characterButton('6'),
+          operatorButton('×'),
           equalsButton,
-          characterButton('1', 'one'),
-          characterButton('2', 'two'),
-          characterButton('3', 'three'),
-          operatorButton('−', 'minus'),
-          characterButton('0', 'zero'),
-          characterButton('.', 'decimal'),
+          characterButton('1'),
+          characterButton('2'),
+          characterButton('3'),
+          operatorButton('−'),
+          characterButton('0'),
+          characterButton('.'),
           signButton,
-          operatorButton('+', 'plus')
+          operatorButton('+')
         ]}
       </form>
     </body>
   `
-)
-
-app.render(view)
+}
