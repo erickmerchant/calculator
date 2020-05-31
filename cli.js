@@ -8,7 +8,7 @@ command({
   async action() {
     execa('css src/styles.mjs src/css/styles -wd', execaOptions)
 
-    execa('dev serve -m src/app.importmap src -e dev.html', execaOptions)
+    execa('dev serve -m src/app.importmap src -d -e dev.html', execaOptions)
   }
 })
 
