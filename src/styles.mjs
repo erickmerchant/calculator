@@ -23,9 +23,8 @@ export const styles = {
     display: grid;
     gap: 0.25em;
     grid-template-columns: repeat(5, 1fr);
-    grid-auto-rows: 1fr;
+    grid-auto-rows: 3em;
     width: 20em;
-    height: 20em;
     margin: auto;
     padding: 1em;
     background: white;
@@ -45,11 +44,11 @@ export const styles = {
     display: flex;
     grid-column: 1 / span 5;
     justify-content: flex-end;
-    height: 3em;
     padding: 1em;
+    margin-bottom: 0.25em;
     color: var(--color);
+    align-items: center;
     line-height: 1;
-
   `,
   button: (styles) => `
     ${styles.element}
