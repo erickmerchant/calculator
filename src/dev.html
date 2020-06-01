@@ -6,8 +6,6 @@
       href="/css/styles.css"
       rel="stylesheet"
       type="text/css"
-      media="print"
-      onload="this.media = 'all'"
     />
     <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
     <title>Calculator</title>
@@ -40,7 +38,17 @@
         const query = `?${Date.now()}`
 
         if (changes.file === 'css/styles.css') {
-          document.querySelector('[rel="stylesheet"]').href = `/css/styles.css${query}`
+          const link = document.querySelector('[rel="stylesheet"]')
+
+          const clone = link.cloneNode()
+
+          clone.href = `/css/styles.css${query}`
+
+          clone.onload = () => {
+            link.remove()
+          }
+
+          link.after(clone)
         } else if (['app.mjs', 'css/styles.mjs'].includes(changes.file)) {
           start(query)
         }

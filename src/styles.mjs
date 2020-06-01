@@ -17,7 +17,7 @@ export const styles = {
   app: `
     display: flex;
     height: 100%;
-    background: hsl(200, 5%, 50%);
+    background: hsl(200, 5%, 60%);
   `,
   form: `
     display: grid;
@@ -37,7 +37,7 @@ export const styles = {
 
     --color: hsl(var(--hue), var(--saturation), 50%);
     --hue: 200;
-    --saturation: 15%;
+    --saturation: 10%;
   `,
   output: (styles) => `
     ${styles.element}
@@ -54,7 +54,6 @@ export const styles = {
   button: (styles) => `
     ${styles.element}
 
-    min-height: 3em;
     background-color: var(--color);
     color: white;
 
