@@ -15,6 +15,20 @@
 
       const target = document.querySelector('body')
 
+      const loadCSS = async (query = '') => {
+        const css = await fetch(`/css/styles.css${query}`)
+
+        let oldsheet = document.querySelector('style')
+
+        let stylesheet = document.createElement('style')
+
+        document.head.append(stylesheet)
+
+        stylesheet.textContent = await css.text()
+
+        if (oldsheet) oldsheet.remove()
+      }
+
       const start = async (query = '') => {
         const {classes} = await import(`/css/styles.mjs${query}`)
         const {createComponent, defaultState} = await import(`/app.mjs${query}`)
@@ -28,29 +42,21 @@
         app.render(view)
       }
 
+      loadCSS()
+
       start()
 
       const changes = new EventSource('/__changes')
 
-      changes.onmessage = (e) => {
+      changes.onmessage = async (e) => {
         const changes = JSON.parse(e.data)
         const query = `?${Date.now()}`
 
         if (changes.file === 'css/styles.css') {
-          const link = document.querySelector('[rel="stylesheet"]')
-
-          const clone = link.cloneNode()
-
-          clone.href = `/css/styles.css${query}`
-
-          clone.onload = () => {
-            link.remove()
-          }
-
-          link.after(clone)
-        } else if (['app.mjs', 'css/styles.mjs'].includes(changes.file)) {
-          start(query)
+          await loadCSS(query)
         }
+
+        start(query)
       }
     </script>
   </head>
