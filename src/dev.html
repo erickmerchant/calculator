@@ -26,8 +26,10 @@
       }
 
       const start = async (query = '') => {
-        const {classes} = await import(`/css/styles.mjs${query}`)
-        const {createComponent, defaultState} = await import(`/app.mjs${query}`)
+        const [{classes}, {createComponent, defaultState}] = await Promise.all([
+          import(`/css/styles.mjs${query}`),
+          import(`/app.mjs${query}`)
+        ])
 
         app.commit((state = Object.assign({}, defaultState)) => state)
 
