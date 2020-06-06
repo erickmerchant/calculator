@@ -5,57 +5,31 @@
     <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
     <title>Calculator</title>
     <script type="module">
+      import {createContainer} from '@erickmerchant/dev-cli/container.mjs'
       import {createDomView, createApp} from '@erickmerchant/framework'
 
       const app = createApp()
 
       const target = document.querySelector('body')
 
-      const loadCSS = async (query = '') => {
-        const css = await fetch(`/css/styles.css${query}`)
+      createContainer(
+        {
+          'css/styles.mjs': 'styles',
+          'main.mjs': 'main'
+        },
+        ['css/styles.css'],
+        async ({main, styles}) => {
+          app.commit(
+            (state = Object.assign({}, main.defaultState)) => state
+          )
 
-        let oldsheet = document.querySelector('style')
+          const component = main.createComponent(app, styles.classes)
 
-        let stylesheet = document.createElement('style')
+          const view = createDomView(target, component)
 
-        document.head.append(stylesheet)
-
-        stylesheet.textContent = await css.text()
-
-        if (oldsheet) oldsheet.remove()
-      }
-
-      const start = async (query = '') => {
-        const [{classes}, {createComponent, defaultState}] = await Promise.all([
-          import(`/css/styles.mjs${query}`),
-          import(`/app.mjs${query}`)
-        ])
-
-        app.commit((state = Object.assign({}, defaultState)) => state)
-
-        const component = createComponent(app, classes)
-
-        const view = createDomView(target, component)
-
-        app.render(view)
-      }
-
-      loadCSS()
-
-      start()
-
-      const changes = new EventSource('/__changes')
-
-      changes.onmessage = async (e) => {
-        const changes = JSON.parse(e.data)
-        const query = `?${Date.now()}`
-
-        if (changes.file === 'css/styles.css') {
-          await loadCSS(query)
+          app.render(view)
         }
-
-        start(query)
-      }
+      )
     </script>
   </head>
   <body></body>
