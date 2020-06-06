@@ -19,9 +19,7 @@
         },
         ['css/styles.css'],
         async ({main, styles}) => {
-          app.commit(
-            (state = Object.assign({}, main.defaultState)) => state
-          )
+          app.commit((state = Object.assign({}, main.defaultState)) => state)
 
           const component = main.createComponent(app, styles.classes)
 
