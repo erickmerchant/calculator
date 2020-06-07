@@ -8,7 +8,7 @@ command({
   async action() {
     execa('css src/styles.mjs src/css/styles -wd', execaOptions)
 
-    execa('dev serve -m src/app.importmap src -d -e dev.html', execaOptions)
+    execa('dev serve src -d -e dev.html', execaOptions)
   }
 })
 
@@ -18,7 +18,7 @@ command({
     await Promise.all([
       execa('css src/styles.mjs src/css/styles', execaOptions),
 
-      execa('dev cache -m src/app.importmap src dist', execaOptions)
+      execa('dev cache src dist', execaOptions)
     ])
   }
 })

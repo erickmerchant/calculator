@@ -1,4 +1,4 @@
-import {html} from '@erickmerchant/framework'
+import {html} from '@erickmerchant/framework/main.mjs'
 
 const calc = (state) => {
   state.output = 'left'
