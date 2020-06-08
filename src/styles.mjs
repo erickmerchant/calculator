@@ -13,6 +13,14 @@ export const _start = `
   }
 `
 
+const element = `
+  border: 2px solid var(--color);
+
+  --color: hsl(var(--hue), var(--saturation), 50%);
+  --hue: 200;
+  --saturation: 10%;
+`
+
 export const styles = {
   app: `
     display: flex;
@@ -31,15 +39,8 @@ export const styles = {
     border: 3px solid white;
     box-shadow: 3px 3px 9px #222;
   `,
-  element: `
-    border: 2px solid var(--color);
-
-    --color: hsl(var(--hue), var(--saturation), 50%);
-    --hue: 200;
-    --saturation: 10%;
-  `,
   output: (styles) => `
-    ${styles.element}
+    ${element}
 
     display: flex;
     grid-column: 1 / span 5;
@@ -51,7 +52,7 @@ export const styles = {
     line-height: 1;
   `,
   button: (styles) => `
-    ${styles.element}
+    ${element}
 
     background-color: var(--color);
     color: white;
