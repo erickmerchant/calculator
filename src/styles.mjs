@@ -39,7 +39,7 @@ export const styles = {
     border: 3px solid white;
     box-shadow: 3px 3px 9px #222;
   `,
-  output: (styles) => `
+  output: `
     ${element}
 
     display: flex;
@@ -51,7 +51,7 @@ export const styles = {
     align-items: center;
     line-height: 1;
   `,
-  button: (styles) => `
+  button: `
     ${element}
 
     background-color: var(--color);
