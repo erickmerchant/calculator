@@ -14,7 +14,7 @@ export const _start = `
 `
 
 const element = `
-  border: 2px solid var(--color);
+  border: none;
 
   --color: hsl(var(--hue), var(--saturation), 50%);
   --hue: 200;
@@ -47,6 +47,7 @@ export const styles = {
     justify-content: flex-end;
     padding: 1em;
     margin-bottom: 0.25em;
+    border: 2px solid var(--color);
     color: var(--color);
     align-items: center;
     line-height: 1;
@@ -73,7 +74,7 @@ export const styles = {
     --saturation: 60%;
   `,
   equals: (styles) => `
-    ${styles.button}
+    ${styles.operator}
 
     grid-row: 3 / span 3;
     grid-column: 5;
