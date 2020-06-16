@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@erickmerchant/css": "^22.4.0",
-    "@erickmerchant/dev-cli": "^15.0.0",
+    "@erickmerchant/dev-cli": "^16.0.0",
     "@erickmerchant/framework": "^37.1.0",
     "execa": "^4.0.2",
     "sergeant": "^28.1.1"
