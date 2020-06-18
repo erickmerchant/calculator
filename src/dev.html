@@ -13,7 +13,7 @@
       const target = document.querySelector('body')
 
       createContainer(
-        ['main.js', 'css/styles.mjs'],
+        ['main.js', 'css/styles.js'],
         ['css/styles.css'],
         async ({defaultState, createComponent}, {classes}) => {
           app.commit((state = Object.assign({}, defaultState)) => state)
