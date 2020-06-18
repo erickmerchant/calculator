@@ -5,10 +5,11 @@
   "keywords": [],
   "license": "ISC",
   "author": "Erick Merchant <erickmerchant@gmail.com>",
+  "type": "module",
   "scripts": {
     "build": "node ./cli.js build",
     "start": "node ./cli.js start",
-    "lint": "eslint cli.js 'src/*.mjs'",
+    "lint": "eslint cli.js 'src/*.js'",
     "test": "npm run lint"
   },
   "dependencies": {
