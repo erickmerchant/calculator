@@ -1,29 +1,29 @@
 #!/usr/bin/env node
-import sergeant from 'sergeant'
 import execa from 'execa'
 
-const {start, command} = sergeant('cli.js')
+const options = {stdio: 'inherit', preferLocal: true, cwd: process.cwd()}
+const command = process.argv[2]
 
-const execaOptions = {shell: true, stdio: 'inherit', cwd: process.cwd()}
+const program = async () => {
+  try {
+    if (command === 'start') {
+      execa('css', ['src/styles.js', 'src/css/styles', '-wd'], options)
 
-command({
-  name: 'start',
-  async action() {
-    execa('css src/styles.js src/css/styles -wd', execaOptions)
+      execa('dev', ['serve', 'src', '-d', '-e', 'dev.html'], options)
+    }
 
-    execa('dev serve src -d -e dev.html', execaOptions)
+    if (command === 'build') {
+      await Promise.all([
+        execa('css', ['src/styles.js', 'src/css/styles'], options),
+
+        execa('dev', ['cache', 'src', 'dist'], options)
+      ])
+    }
+  } catch (error) {
+    console.error(error)
+
+    process.exit(1)
   }
-})
+}
 
-command({
-  name: 'build',
-  async action() {
-    await Promise.all([
-      execa('css src/styles.js src/css/styles', execaOptions),
-
-      execa('dev cache src dist', execaOptions)
-    ])
-  }
-})
-
-start(process.argv.slice(2))
+program()

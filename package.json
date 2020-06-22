@@ -13,11 +13,10 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@erickmerchant/css": "^23.0.1",
-    "@erickmerchant/dev-cli": "^17.0.0",
+    "@erickmerchant/css": "^23.1.0",
+    "@erickmerchant/dev-cli": "^17.1.0",
     "@erickmerchant/framework": "^38.0.0",
-    "execa": "^4.0.2",
-    "sergeant": "^28.1.1"
+    "execa": "^4.0.2"
   },
   "devDependencies": {
     "@erickmerchant/eslint-config": "^1.1.1",
