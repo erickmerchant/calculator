@@ -16,9 +16,7 @@ export const _start = `
 const element = `
   border: none;
 
-  --color: hsl(var(--hue), var(--saturation), 50%);
-  --hue: 200;
-  --saturation: 10%;
+  --color: hsl(var(--hue, 200), var(--saturation, 10%), 50%);
 `
 
 export const styles = {
