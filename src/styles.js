@@ -21,7 +21,7 @@ const element = `
 
 export const styles = {
   app: `
-    display: flex;
+    display: grid;
     height: 100%;
     background: hsl(200, 5%, 60%);
   `,
@@ -40,14 +40,14 @@ export const styles = {
   output: `
     ${element}
 
-    display: flex;
     grid-column: 1 / span 5;
-    justify-content: flex-end;
+    display: grid;
+    justify-content: end;
+    align-content: center;
     padding: 1em;
     margin-bottom: 0.25em;
     border: 2px solid var(--color);
     color: var(--color);
-    align-items: center;
     line-height: 1;
   `,
   button: `
