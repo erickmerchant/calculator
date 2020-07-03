@@ -31,7 +31,7 @@ const format = (val) => {
   const index = val.indexOf('.')
   const number = Number(val)
 
-  if (index === -1) {
+  if (!~index) {
     return number
   }
 
