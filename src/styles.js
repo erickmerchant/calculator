@@ -5,7 +5,7 @@ export const _start = `
     padding: 0;
     max-width: 100%;
     border-radius: 3px;
-    font: 24px/1.5 Consolas, monaco, monospace;
+    font: inherit;
   }
 
   html {
@@ -24,6 +24,7 @@ export const styles = {
     display: grid;
     height: 100%;
     background: hsl(200, 5%, 60%);
+    font: 24px/1.5 Consolas, monaco, monospace;
   `,
   form: `
     display: grid;
@@ -48,7 +49,6 @@ export const styles = {
     margin-bottom: 0.25em;
     border: 2px solid var(--color);
     color: var(--color);
-    line-height: 1;
   `,
   button: `
     ${element}
