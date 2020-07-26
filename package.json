@@ -13,7 +13,7 @@
     "test": "npm run lint"
   },
   "dependencies": {
-    "@erickmerchant/css": "^23.1.1",
+    "@erickmerchant/css": "^23.2.1",
     "@erickmerchant/dev-cli": "^18.1.1",
     "@erickmerchant/framework": "^39.0.0",
     "execa": "^4.0.3"
