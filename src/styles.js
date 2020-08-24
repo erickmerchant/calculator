@@ -23,7 +23,7 @@ export const styles = {
   app: `
     display: grid;
     height: 100%;
-    background: hsl(200, 5%, 60%);
+    background-color: hsl(200, 5%, 60%);
     font: 24px/1.5 Consolas, monaco, monospace;
   `,
   form: `
@@ -34,7 +34,7 @@ export const styles = {
     width: 20em;
     margin: auto;
     padding: 1em;
-    background: white;
+    background-color: white;
     border: 3px solid white;
     box-shadow: 3px 3px 9px #222;
   `,
