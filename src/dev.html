@@ -18,7 +18,7 @@
         async ({defaultState, createComponent}, {classes}) => {
           app.commit((state = Object.assign({}, defaultState)) => state)
 
-          const component = createComponent(app, classes)
+          const component = createComponent({app, classes})
 
           const view = createDomView(target, component)
 

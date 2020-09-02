@@ -52,7 +52,7 @@ export const defaultState = {
   done: false
 }
 
-export const createComponent = (app, classes) => {
+export const createComponent = ({app, classes}) => {
   const button = (options) => html`
     <button
       type="button"
