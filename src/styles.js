@@ -19,7 +19,24 @@ const element = `
   --color: hsl(var(--hue, 200), var(--saturation, 10%), 50%);
 `
 
-export const styles = {
+const button = `
+  ${element}
+
+  background-color: var(--color);
+  color: white;
+
+  :focus, :active {
+    filter: brightness(1.1);
+  }
+`
+
+const operator = `
+  ${button}
+
+  --saturation: 60%;
+`
+
+export const classes = {
   app: `
     display: grid;
     height: 100%;
@@ -50,29 +67,16 @@ export const styles = {
     border: 2px solid var(--color);
     color: var(--color);
   `,
-  button: `
-    ${element}
-
-    background-color: var(--color);
-    color: white;
-
-    :focus, :active {
-      filter: brightness(1.1);
-    }
-  `,
-  operator: (styles) => `
-    ${styles.button}
-
-    --saturation: 60%;
-  `,
-  clear: (styles) => `
-    ${styles.button}
+  button,
+  operator,
+  clear: `
+    ${button}
 
     --hue: 350;
     --saturation: 60%;
   `,
-  equals: (styles) => `
-    ${styles.operator}
+  equals: `
+    ${operator}
 
     grid-row: 3 / span 3;
     grid-column: 5;
