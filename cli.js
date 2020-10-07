@@ -9,7 +9,7 @@ const program = async () => {
     if (command === 'start') {
       execa('css', ['src/styles.js', 'src/css/styles', '-wd'], options)
 
-      execa('dev', ['serve', 'src', '-d', '-e', 'dev.html'], options)
+      execa('dev', ['serve', 'src', '-de', 'dev.html'], options)
     }
 
     if (command === 'build') {
