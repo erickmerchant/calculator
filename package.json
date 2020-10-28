@@ -16,7 +16,7 @@
     "@erickmerchant/css": "^24.0.0",
     "@erickmerchant/dev-cli": "^20.1.0",
     "@erickmerchant/framework": "^40.1.0",
-    "execa": "^4.0.3"
+    "execa": "^4.1.0"
   },
   "devDependencies": {
     "@erickmerchant/eslint-config": "^1.1.2",
