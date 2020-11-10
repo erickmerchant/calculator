@@ -23,7 +23,7 @@ const button = `
   ${element}
 
   background-color: var(--color);
-  color: white;
+  color: #fff;
 
   :focus, :active {
     filter: brightness(1.1);
@@ -51,8 +51,8 @@ export const classes = {
     width: 20em;
     margin: auto;
     padding: 1em;
-    background-color: white;
-    border: 3px solid white;
+    background-color: #fff;
+    border: 3px solid #fff;
     box-shadow: 3px 3px 9px #222;
   `,
   output: `
