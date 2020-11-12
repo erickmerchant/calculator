@@ -1,22 +1,31 @@
 #!/usr/bin/env node
-import execa from 'execa'
+import childProcess from 'child_process'
 
-const options = {stdio: 'inherit', preferLocal: true, cwd: process.cwd()}
+const options = {stdio: 'inherit'}
 const command = process.argv[2]
+
+const spawn = (...args) =>
+  new Promise((resolve) => {
+    const spawned = childProcess.spawn(...args)
+
+    spawned.on('exit', () => {
+      resolve()
+    })
+  })
 
 const program = async () => {
   try {
     if (command === 'start') {
-      execa('css', ['src/styles.js', 'src/css/styles', '-wd'], options)
+      spawn('css', ['src/styles.js', 'src/css/styles', '-wd'], options)
 
-      execa('dev', ['serve', 'src', '-de', 'dev.html'], options)
+      spawn('dev', ['serve', 'src', '-de', 'dev.html'], options)
     }
 
     if (command === 'build') {
       await Promise.all([
-        execa('css', ['src/styles.js', 'src/css/styles'], options),
+        spawn('css', ['src/styles.js', 'src/css/styles'], options),
 
-        execa('dev', ['cache', 'src', 'dist'], options)
+        spawn('dev', ['cache', 'src', 'dist'], options)
       ])
     }
   } catch (error) {

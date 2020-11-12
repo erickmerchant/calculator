@@ -15,15 +15,14 @@
   "dependencies": {
     "@erickmerchant/css": "^24.3.0",
     "@erickmerchant/dev-cli": "^21.0.0",
-    "@erickmerchant/framework": "^40.1.1",
-    "execa": "^4.1.0"
+    "@erickmerchant/framework": "^40.1.1"
   },
   "devDependencies": {
     "@erickmerchant/eslint-config": "^1.1.2",
     "@erickmerchant/prettier-config": "^1.2.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^7.13.0",
-    "eslint-plugin-html": "^6.1.0",
+    "eslint-plugin-html": "^6.1.1",
     "eslint-plugin-prettier": "^3.1.4",
     "prettier": "^2.1.2"
   },
