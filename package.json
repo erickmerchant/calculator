@@ -14,8 +14,8 @@
   },
   "dependencies": {
     "@erickmerchant/css": "^24.3.0",
-    "@erickmerchant/dev-cli": "^21.0.0",
-    "@erickmerchant/framework": "^40.1.1"
+    "@erickmerchant/dev-cli": "^21.2.0",
+    "@erickmerchant/framework": "^40.2.0"
   },
   "devDependencies": {
     "@erickmerchant/eslint-config": "^1.1.2",
