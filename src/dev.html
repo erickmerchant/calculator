@@ -14,12 +14,12 @@
       const target = document.querySelector('body')
 
       runtime(async (get) => {
-        const {defaultState, createComponent, classes} = await get(
+        const {getDefaultState, createComponent, classes} = await get(
           'main.js',
           'css/styles.js'
         )
 
-        app.commit((state = Object.assign({}, defaultState)) => state)
+        app.commit((state = getDefaultState()) => state)
 
         const component = createComponent({app, classes})
 

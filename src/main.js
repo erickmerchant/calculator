@@ -44,12 +44,14 @@ const format = (val) => {
   return number.toFixed(1)
 }
 
-export const defaultState = {
-  output: null,
-  left: null,
-  operator: null,
-  right: null,
-  done: false
+export const getDefaultState = () => {
+  return {
+    output: null,
+    left: null,
+    operator: null,
+    right: null,
+    done: false
+  }
 }
 
 export const createComponent = ({app, classes}) => {
@@ -64,7 +66,7 @@ export const createComponent = ({app, classes}) => {
   `
 
   const clearButton = button({
-    onclick: () => app.commit(Object.assign({}, defaultState)),
+    onclick: () => app.commit(getDefaultState()),
     classes: classes.clear,
     text: 'AC'
   })
@@ -115,7 +117,7 @@ export const createComponent = ({app, classes}) => {
       onclick: () =>
         app.commit((state) => {
           if (state.done) {
-            state = Object.assign({}, defaultState)
+            state = getDefaultState()
           }
 
           let target = 'right'
