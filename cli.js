@@ -20,14 +20,6 @@ const program = async () => {
 
       spawn('dev', ['serve', 'src', 'dist', '-de', 'dev.html'], options)
     }
-
-    if (command === 'build') {
-      await Promise.all([
-        spawn('css', ['src/styles.js', 'dist/css/styles'], options),
-
-        spawn('dev', ['cache', 'src', 'dist'], options)
-      ])
-    }
   } catch (error) {
     console.error(error)
 
