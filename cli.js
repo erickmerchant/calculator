@@ -16,7 +16,7 @@ const spawn = (...args) =>
 const program = async () => {
   try {
     if (command === 'start') {
-      spawn('css', ['src/styles.js', 'dist/css/styles', '-wd'], options)
+      spawn('css', ['src/styles.js', 'dist/css', '-wd'], options)
 
       spawn('dev', ['serve', 'src', 'dist', '-de', 'dev.html'], options)
     }
