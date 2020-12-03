@@ -7,7 +7,7 @@
   "author": "Erick Merchant <erickmerchant@gmail.com>",
   "type": "module",
   "scripts": {
-    "start": "node ./cli.js start",
+    "start": "node cli.js start",
     "lint": "eslint . --ext .html,.js --ignore-path .gitignore",
     "test": "npm run lint"
   },
