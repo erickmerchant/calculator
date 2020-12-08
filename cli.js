@@ -26,7 +26,7 @@ const spawn = (strs, ...quoted) =>
 const program = async () => {
   try {
     if (command === 'start') {
-      spawn`css src/styles.js dist/css -wd`
+      spawn`css src/styles.js dist/css -dw src`
 
       spawn`dev serve src dist -de dev.html`
     }
