@@ -46,7 +46,6 @@ export const classes = {
   form: `
     display: grid;
     gap: 0.25em;
-    grid-template-columns: repeat(5, 1fr);
     grid-auto-rows: 3em;
     width: 20em;
     margin: auto;
@@ -58,13 +57,13 @@ export const classes = {
   output: `
     ${element}
 
-    grid-column: 1 / span 5;
+    grid-column: span 5;
     display: grid;
     justify-content: end;
     align-content: center;
     padding: 1em;
     margin-bottom: 0.25em;
-    border: 2px solid var(--color);
+    border: 2px solid currentColor;
     color: var(--color);
   `,
   button,
@@ -78,7 +77,6 @@ export const classes = {
   equals: `
     ${operator}
 
-    grid-row: 3 / span 3;
-    grid-column: 5;
+    grid-row: span 3;
   `
 }
